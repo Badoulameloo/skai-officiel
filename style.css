@@ -1,64 +1,136 @@
+/* Importation des polices : Playfair pour le côté chic, Montserrat pour la clarté */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@200;300;400;600&display=swap');
+
 :root {
     --blanc: #FFFFFF;
-    --marron-skai: #3E2723;
+    --marron-skai: #3E2723; /* Marron profond */
+    --ivoire-tres-leger: #FDFDFD;
+    --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 * {
     margin: 0;
     padding: 0;
-    box-word: border-box;
+    box-sizing: border-box;
 }
 
 body {
     background-color: var(--blanc);
     color: var(--marron-skai);
-    font-family: 'Arial', sans-serif; /* On pourra changer pour une police plus luxe */
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
 }
 
+/* --- HEADER --- */
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 5%;
-    border-bottom: 1px solid rgba(62, 39, 35, 0.1);
+    padding: 30px 6%;
+    background: var(--blanc);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(62, 39, 35, 0.05); /* Ligne ultra fine */
 }
 
 .logo {
-    font-size: 24px;
-    font-weight: bold;
-    letter-spacing: 3px;
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 8px; /* Grand espacement pour le luxe */
+    text-transform: uppercase;
+    cursor: pointer;
 }
 
-/* Style du Hamburger */
+/* --- HAMBURGER RAFFINÉ --- */
 .hamburger {
     cursor: pointer;
     display: flex;
     flex-direction: column;
-    gap: 5px;
-    z-index: 100;
+    justify-content: center;
+    align-items: flex-end; /* Aligné à droite */
+    width: 30px;
+    height: 20px;
 }
 
 .hamburger span {
-    width: 30px;
-    height: 2px;
+    display: block;
+    width: 100%;
+    height: 1px; /* Très fin pour le raffinement */
     background-color: var(--marron-skai);
-    transition: 0.3s;
+    margin-bottom: 6px;
+    transition: var(--transition);
 }
 
-/* Menu mobile (caché par défaut) */
-.nav-menu {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 70%;
-    height: 100vh;
-    background-color: var(--blanc);
+.hamburger span:last-child {
+    width: 70%; /* Barre du bas plus courte pour le style */
+    margin-bottom: 0;
+}
+
+/* --- HERO SECTION --- */
+.hero {
+    height: 85vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    transition: 0.5s;
-    box-shadow: -5px 0 15px rgba(0,0,0,0.05);
+    text-align: center;
+    background-color: var(--ivoire-tres-leger);
+    padding: 0 10%;
+}
+
+.hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 10vw, 5.5rem);
+    font-weight: 400;
+    margin-bottom: 15px;
+    letter-spacing: -2px;
+}
+
+.hero p {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    margin-bottom: 45px;
+    font-weight: 300;
+    color: rgba(62, 39, 35, 0.7);
+}
+
+/* --- BOUTON MINIMALISTE --- */
+.btn {
+    display: inline-block;
+    text-decoration: none;
+    color: var(--blanc);
+    background-color: var(--marron-skai);
+    padding: 18px 45px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    border: 1px solid var(--marron-skai);
+    transition: var(--transition);
+}
+
+.btn:hover {
+    background-color: transparent;
+    color: var(--marron-skai);
+}
+
+/* --- MENU MOBILE OVERLAY --- */
+.nav-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%; /* Plein écran sur mobile pour le côté immersif */
+    height: 100vh;
+    background-color: var(--blanc);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: var(--transition);
+    z-index: 99;
 }
 
 .nav-menu.active {
@@ -71,13 +143,21 @@ header {
 }
 
 .nav-menu ul li {
-    margin: 25px 0;
+    margin: 30px 0;
+    overflow: hidden;
 }
 
 .nav-menu ul li a {
+    display: block;
     text-decoration: none;
     color: var(--marron-skai);
-    font-size: 20px;
-    text-transform: uppercase;
-    font-weight: 500;
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-style: italic;
+    transition: 0.3s;
+}
+
+.nav-menu ul li a:hover {
+    opacity: 0.5;
+    letter-spacing: 2px;
 }
