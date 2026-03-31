@@ -24,37 +24,25 @@ body {
 
 /* --- HEADER --- */
 header {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr; /* 3 colonnes : Gauche, Logo (auto), Droite */
+    display: flex;
+    justify-content: space-between;
     align-items: center;
     padding: 30px 6%;
     background: var(--blanc);
     position: sticky;
     top: 0;
     z-index: 1000;
-    border-bottom: 1px solid rgba(62, 39, 35, 0.05);
-}
-
-.header-left {
-    /* Vide, sert de contrepoids */
+    border-bottom: 1px solid rgba(62, 39, 35, 0.05); /* Ligne ultra fine */
 }
 
 .logo {
     font-family: 'Playfair Display', serif;
-    font-size: 28px;
+    font-size: 26px;
     font-weight: 700;
-    letter-spacing: 10px; /* Encore plus d'espace pour le luxe */
+    letter-spacing: 8px; /* Grand espacement pour le luxe */
     text-transform: uppercase;
-    text-align: center;
-    margin-left: 10px; /* Pour compenser visuellement l'espace après la dernière lettre */
+    cursor: pointer;
 }
-
-.header-right {
-    display: flex;
-    justify-content: flex-end; /* Pousse le hamburger tout à droite */
-}
-
-/* Le reste du CSS (hamburger, hero, etc.) ne change pas */
 
 /* --- HAMBURGER RAFFINÉ --- */
 .hamburger {
