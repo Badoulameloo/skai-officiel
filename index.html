@@ -42,12 +42,12 @@
 
     <script>
         const hamburger = document.getElementById('hamburger');
-        const navMenu = document.getElementById('nav-menu');
+const navMenu = document.getElementById('nav-menu');
 
-        hamburger.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-            console.log("Menu cliqué !"); 
-        });
+hamburger.addEventListener('click', () => {
+    navMenu.classList.toggle('active');
+    hamburger.classList.toggle('active'); // Ajoute cette ligne pour l'animation en croix
+});
     </script>
 </body>
 </html>
