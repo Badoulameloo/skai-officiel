@@ -65,6 +65,16 @@
                 hamburger.classList.remove('active');
             });
         });
+        function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('skai-cart')) || [];
+    const countElement = document.getElementById('cart-count');
+    if (countElement) {
+        countElement.innerText = cart.length;
+    }
+}
+
+// Appeler la fonction au chargement de la page
+updateCartCount();
     </script>
 </body>
 </html>

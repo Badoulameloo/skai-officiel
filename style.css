@@ -375,3 +375,38 @@ header {
         grid-template-columns: 1fr;
     }
 }
+/* --- ICONE PANIER --- */
+.cart-icon {
+    position: relative;
+    color: var(--marron-skai);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    transition: var(--transition);
+}
+
+.cart-icon:hover {
+    opacity: 0.6;
+}
+
+#cart-count {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    background-color: var(--marron-skai);
+    color: var(--blanc);
+    font-size: 9px;
+    font-weight: 600;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
