@@ -9,30 +9,28 @@
 <body>
 
     <header>
-        <header>
-    <div class="header-left"></div>
+        <div class="header-left"></div>
 
-    <div class="logo">SKAI</div>
-    
-    <div class="header-right">
-        <div class="hamburger" id="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
+        <div class="logo">SKAI</div>
+        
+        <div class="header-right">
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
-    </div>
-</header>
-
-        <nav class="nav-menu" id="nav-menu">
-            <ul>
-                <li><a href="index.html">Accueil</a></li>
-                <li><a href="boutique.html">Boutique</a></li>
-                <li><a href="propos.html">À Propos</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li><a href="panier.html">Panier</a></li>
-            </ul>
-        </nav>
     </header>
+
+    <nav class="nav-menu" id="nav-menu">
+        <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="boutique.html">Boutique</a></li>
+            <li><a href="propos.html">À Propos</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="panier.html">Panier</a></li>
+        </ul>
+    </nav>
 
     <main>
         <section class="hero">
@@ -43,13 +41,13 @@
     </main>
 
     <script>
-       const hamburger = document.getElementById('hamburger');
-const navMenu = document.getElementById('nav-menu');
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
 
-hamburger.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
-    console.log("Menu cliqué !"); // Petit test pour voir si ça réagit dans la console (F12)
-});
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            console.log("Menu cliqué !"); 
+        });
     </script>
 </body>
 </html>
