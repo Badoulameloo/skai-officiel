@@ -1,0 +1,83 @@
+:root {
+    --blanc: #FFFFFF;
+    --marron-skai: #3E2723;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-word: border-box;
+}
+
+body {
+    background-color: var(--blanc);
+    color: var(--marron-skai);
+    font-family: 'Arial', sans-serif; /* On pourra changer pour une police plus luxe */
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 5%;
+    border-bottom: 1px solid rgba(62, 39, 35, 0.1);
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 3px;
+}
+
+/* Style du Hamburger */
+.hamburger {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    z-index: 100;
+}
+
+.hamburger span {
+    width: 30px;
+    height: 2px;
+    background-color: var(--marron-skai);
+    transition: 0.3s;
+}
+
+/* Menu mobile (caché par défaut) */
+.nav-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 70%;
+    height: 100vh;
+    background-color: var(--blanc);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: 0.5s;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.05);
+}
+
+.nav-menu.active {
+    right: 0;
+}
+
+.nav-menu ul {
+    list-style: none;
+    text-align: center;
+}
+
+.nav-menu ul li {
+    margin: 25px 0;
+}
+
+.nav-menu ul li a {
+    text-decoration: none;
+    color: var(--marron-skai);
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: 500;
+}
