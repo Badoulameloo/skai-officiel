@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>À Propos | SKAÏ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="header-left">
+            <div class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="logo">SKAÏ</div>
+        <div class="header-right">
+            <a href="panier.html" class="cart-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <path d="M16 10a4 4 0 0 1-8 0"></path>
+                </svg>
+                <span id="cart-count">0</span>
+            </a>
+        </div>
+    </header>
+
+    <nav class="nav-menu" id="nav-menu">
+        <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="boutique.html">Boutique</a></li>
+            <li><a href="propos.html">À Propos</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main class="about-container">
+        <section class="about-story">
+            <span class="subtitle">L'Histoire</span>
+            <h1>À propos de SKAÏ</h1>
+            
+            <div class="story-content">
+                <p class="highlight">SKAÏ est née d’un lien, d’une histoire, d’un amour profond. Derrière ce nom se cachent deux âmes : la mienne et celle de ma mère. Une fusion, un héritage, une identité.</p>
+                
+                <div class="story-grid">
+                    <div class="story-image">
+                        <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800" alt="SKAÏ Identity">
+                    </div>
+                    <div class="story-text">
+                        <p>Cette marque n’est pas seulement un projet de mode. C’est une manière de raconter qui je suis, d’honorer d’où je viens, et de transformer les émotions en créations. Chaque pièce SKAÏ est pensée avec intention : simplicité, élégance, et caractère.</p>
+                        
+                        <p>Je voulais créer des vêtements qui parlent sans bruit. Des pièces qui accompagnent, qui rassurent, qui donnent confiance. Des vêtements dans lesquels on se sent fort(e), beau/belle, et soi-même.</p>
+                        
+                        <blockquote>
+                            "SKAÏ, c’est l’équilibre entre la douceur et la force. C’est une histoire de transmission, de féminité, et de courage."
+                        </blockquote>
+
+                        <p>Plus qu’une marque, SKAÏ est une empreinte.</p>
+                        
+                        <a href="boutique.html" class="btn-minimal">Découvrir la collection —</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('skai-cart')) || [];
+            const count = document.getElementById('cart-count');
+            if(count) count.innerText = cart.length;
+        }
+        updateCartCount();
+    </script>
+</body>
+</html>
