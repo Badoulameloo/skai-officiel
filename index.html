@@ -9,18 +9,18 @@
 <body>
 
     <header>
-        <div class="header-left"></div>
+        <div class="header-left">
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
 
         <div class="logo">SKAI</div>
         
-        <div class="header-left">
-        <div class="hamburger" id="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-    </div>
-        </div>
+        <div class="header-right">
+            </div>
     </header>
 
     <nav class="nav-menu" id="nav-menu">
@@ -29,7 +29,6 @@
             <li><a href="boutique.html">Boutique</a></li>
             <li><a href="propos.html">À Propos</a></li>
             <li><a href="contact.html">Contact</a></li>
-            <li><a href="panier.html">Panier</a></li>
         </ul>
     </nav>
 
@@ -43,12 +42,21 @@
 
     <script>
         const hamburger = document.getElementById('hamburger');
-const navMenu = document.getElementById('nav-menu');
+        const navMenu = document.getElementById('nav-menu');
 
-hamburger.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
-    hamburger.classList.toggle('active'); // Ajoute cette ligne pour l'animation en croix
-});
+        hamburger.addEventListener('click', () => {
+            // On active/désactive le menu et la croix en même temps
+            navMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+
+        // Optionnel : Fermer le menu si on clique sur un lien
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                hamburger.classList.remove('active');
+            });
+        });
     </script>
 </body>
 </html>
