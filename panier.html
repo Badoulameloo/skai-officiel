@@ -32,104 +32,112 @@
 
         <div class="cart-content">
             <div id="cart-items" class="cart-items">
-                <div class="cart-item">
-                    <div class="item-info">
-                        <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=200" alt="Produit">
-                        <div>
-                            <h4>T-Shirt Nazir "Roots"</h4>
-                            <p>15.000 FCFA</p>
-                            <button class="remove-btn">Supprimer</button>
-                        </div>
-                    </div>
                 </div>
-            </div>
 
             <div class="cart-summary">
+                <h3>Résumé</h3>
                 <div class="summary-line">
                     <span>Sous-total</span>
-                    <span id="subtotal">15.000 FCFA</span>
+                    <span id="subtotal">0 FCFA</span>
                 </div>
                 <div class="summary-line">
                     <span>Livraison (Dakar)</span>
-                    <span>2.000 FCFA</span>
+                    <span id="shipping-cost">2.000 FCFA</span>
                 </div>
                 <hr>
                 <div class="summary-line total">
                     <span>Total</span>
-                    <strong id="final-total">17.000 FCFA</strong>
+                    <strong id="final-total">0 FCFA</strong>
                 </div>
-                <button class="checkout-btn">Procéder au paiement</button>
+                <button class="checkout-btn" id="checkout-btn">Procéder au paiement</button>
             </div>
         </div>
     </main>
 
     <script>
-    // --- GESTION DU MENU ---
-    const hamburger = document.getElementById('hamburger');
-    const navMenu = document.getElementById('nav-menu');
-    hamburger.addEventListener('click', () => {
-        navMenu.classList.toggle('active');
-        hamburger.classList.toggle('active');
-    });
-
-    // --- LOGIQUE DU PANIER ---
-    const prixLivraison = 2000; // Livraison fixe à Dakar
-
-    function calculerTotal() {
-        const items = document.querySelectorAll('.cart-item');
-        let sousTotal = 0;
-
-        items.forEach(item => {
-            // On récupère le prix (on enlève " FCFA" et les points pour le calcul)
-            const prixTexte = item.querySelector('.item-price').innerText;
-            const prixNombre = parseInt(prixTexte.replace(/[^0-9]/g, ''));
-            sousTotal += prixNombre;
+        // --- GESTION DU MENU ---
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
         });
 
-        const totalFinal = sousTotal + (sousTotal > 0 ? prixLivraison : 0);
+        // --- LOGIQUE DYNAMIQUE DU PANIER ---
+        const cartItemsContainer = document.getElementById('cart-items');
+        const subtotalElement = document.getElementById('subtotal');
+        const totalElement = document.getElementById('final-total');
+        const shippingCost = 2000;
 
-        // Mise à jour de l'affichage
-        document.getElementById('subtotal').innerText = sousTotal.toLocaleString() + " FCFA";
-        document.getElementById('final-total').innerText = totalFinal.toLocaleString() + " FCFA";
+        // Fonction pour charger et afficher le panier
+        function displayCart() {
+            // On récupère les données (ou un tableau vide si rien n'existe)
+            let cart = JSON.parse(localStorage.getItem('skai-cart')) || [];
+            cartItemsContainer.innerHTML = '';
+            let subtotal = 0;
 
-        // Si le panier est vide
-        if (items.length === 0) {
-            document.getElementById('cart-items').innerHTML = "<p style='text-align:center; padding:50px;'>Votre panier est vide.</p>";
-            document.getElementById('final-total').innerText = "0 FCFA";
-            document.getElementById('subtotal').innerText = "0 FCFA";
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div style="text-align:center; padding: 50px 0;">
+                        <p>Votre panier est vide.</p>
+                        <a href="boutique.html" style="color:var(--marron-skai); font-size:12px; text-transform:uppercase; letter-spacing:2px; display:inline-block; margin-top:20px;">Retourner à la boutique</a>
+                    </div>`;
+                subtotalElement.innerText = "0 FCFA";
+                totalElement.innerText = "0 FCFA";
+                document.getElementById('shipping-cost').innerText = "0 FCFA";
+                return;
+            }
+
+            cart.forEach((item, index) => {
+                subtotal += item.price;
+                cartItemsContainer.innerHTML += `
+                    <div class="cart-item" data-index="${index}">
+                        <div class="item-info">
+                            <img src="${item.image}" alt="${item.name}">
+                            <div>
+                                <h4>${item.name}</h4>
+                                <p class="item-price">${item.price.toLocaleString()} FCFA</p>
+                                <button class="remove-btn" onclick="removeItem(${index})">Supprimer</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            const total = subtotal + shippingCost;
+            subtotalElement.innerText = subtotal.toLocaleString() + " FCFA";
+            totalElement.innerText = total.toLocaleString() + " FCFA";
+            document.getElementById('shipping-cost').innerText = "2.000 FCFA";
         }
-    }
 
-    // --- GESTION DE LA SUPPRESSION ---
-    document.getElementById('cart-items').addEventListener('click', (e) => {
-        if (e.target.classList.contains('remove-btn')) {
-            const itemASupprimer = e.target.closest('.cart-item');
+        // Fonction pour supprimer un article
+        window.removeItem = function(index) {
+            let cart = JSON.parse(localStorage.getItem('skai-cart')) || [];
             
-            // Petit effet visuel avant de supprimer
-            itemASupprimer.style.opacity = '0';
-            itemASupprimer.style.transform = 'translateX(-20px)';
+            // Animation de sortie
+            const element = document.querySelector(`[data-index="${index}"]`);
+            element.style.opacity = '0';
+            element.style.transform = 'translateX(-20px)';
             
             setTimeout(() => {
-                itemASupprimer.remove();
-                calculerTotal();
+                cart.splice(index, 1); // Retire l'élément du tableau
+                localStorage.setItem('skai-cart', JSON.stringify(cart));
+                displayCart(); // Rafraîchit l'affichage
             }, 300);
-        }
-    });
+        };
 
-    // --- BOUTON PAIEMENT ---
-    document.querySelector('.checkout-btn').addEventListener('click', () => {
-        const total = document.getElementById('final-total').innerText;
-        if (total === "0 FCFA") {
-            alert("Votre panier est vide !");
-        } else {
-            alert("Redirection vers le paiement sécurisé... Montant : " + total);
-            // Ici on pourra lier une API comme PayTech ou Wave plus tard
-        }
-    });
+        // Bouton Paiement
+        document.getElementById('checkout-btn').addEventListener('click', () => {
+            let cart = JSON.parse(localStorage.getItem('skai-cart')) || [];
+            if (cart.length > 0) {
+                alert("Redirection vers PayTech / Wave pour un montant de " + totalElement.innerText);
+            } else {
+                alert("Votre panier est vide !");
+            }
+        });
 
-    // Initialisation au chargement
-    calculerTotal();
-
+        // Charger le panier au démarrage
+        displayCart();
     </script>
 </body>
 </html>
