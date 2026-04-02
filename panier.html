@@ -6,27 +6,35 @@
     <title>Votre Panier - SKAÏ</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        body { font-family: 'Helvetica', sans-serif; margin: 0; background-color: #fff; }
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 5%; border-bottom: 1px solid #eee; }
-        .logo { font-size: 1.8rem; letter-spacing: 6px; font-weight: bold; text-decoration: none; color: black; }
-        .cart-count { background: #33241e; color: white; padding: 2px 8px; border-radius: 50%; font-size: 0.8rem; }
-        
-        .cart-container { max-width: 1000px; margin: 50px auto; padding: 0 20px; display: flex; gap: 40px; }
-        .cart-items { flex: 2; }
-        .cart-summary { flex: 1; background: #f9f9f9; padding: 30px; border-radius: 4px; height: fit-content; }
-        
-        .product-card { display: flex; gap: 20px; padding: 20px 0; border-bottom: 1px solid #eee; }
-        .product-card img { width: 110px; height: 140px; object-fit: cover; }
-        
-        .checkout-btn { 
-            width: 100%; background: #33241e; color: white; border: none; padding: 15px; 
-            text-transform: uppercase; font-weight: bold; cursor: pointer; margin-top: 20px; 
-        }
-        .checkout-btn:hover { background: #000; }
+    /* 1. On cache TOUT par défaut pour éviter le flash du produit */
+    #full-cart-ui, #empty-cart-msg { display: none; }
+    
+    /* Tes autres styles restent les mêmes... */
+    body { font-family: 'Helvetica', sans-serif; margin: 0; background-color: #fff; }
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 5%; border-bottom: 1px solid #eee; }
+    .logo { font-size: 1.8rem; letter-spacing: 6px; font-weight: bold; text-decoration: none; color: black; }
+    .cart-count { background: #33241e; color: white; padding: 2px 8px; border-radius: 50%; font-size: 0.8rem; }
+    .cart-container { max-width: 1000px; margin: 50px auto; padding: 0 20px; display: flex; gap: 40px; }
+    .cart-items { flex: 2; }
+    .cart-summary { flex: 1; background: #f9f9f9; padding: 30px; border-radius: 4px; height: fit-content; }
+    .product-card { display: flex; gap: 20px; padding: 20px 0; border-bottom: 1px solid #eee; }
+    .product-card img { width: 110px; height: 140px; object-fit: cover; }
+    .checkout-btn { width: 100%; background: #33241e; color: white; border: none; padding: 15px; text-transform: uppercase; font-weight: bold; cursor: pointer; margin-top: 20px; }
+    #empty-cart-msg { text-align: center; margin-top: 100px; }
+</style>
 
-        #empty-cart-msg { display: none; text-align: center; margin-top: 100px; }
-        #empty-cart-msg a { display: inline-block; margin-top: 20px; color: black; font-weight: bold; }
-    </style>
+<script>
+    // 2. ON VÉRIFIE AVANT MÊME QUE LE RESTE DE LA PAGE CHARGE
+    (function() {
+        const estVide = localStorage.getItem('skai_panier_vide');
+        // Si c'est la première visite ou si ce n'est pas marqué "vide", on force l'affichage du produit
+        if (estVide === null || estVide === 'false') {
+            document.write('<style>#full-cart-ui { display: block !important; }</style>');
+        } else {
+            document.write('<style>#empty-cart-msg { display: block !important; }</style>');
+        }
+    })();
+</script>
 </head>
 <body>
 

@@ -8,7 +8,7 @@
 </head>
 <body>
 
-    <header>
+<header>
     <div class="header-left">
         <div class="hamburger" id="hamburger">
             <span></span>
@@ -44,7 +44,7 @@
         <section class="hero">
             <h1>Notre Collection</h1>
             <p>Each piece is designed to be worn your way.</p>
-            <a href="boutique.html" class="btn">Découvrir</a>
+            <a href="panier.html" onclick="localStorage.setItem('skai_panier_vide', 'false')" class="btn">Découvrir</a>
         </section>
     </main>
 
@@ -53,28 +53,34 @@
         const navMenu = document.getElementById('nav-menu');
 
         hamburger.addEventListener('click', () => {
-            // On active/désactive le menu et la croix en même temps
             navMenu.classList.toggle('active');
             hamburger.classList.toggle('active');
         });
 
-        // Optionnel : Fermer le menu si on clique sur un lien
         document.querySelectorAll('.nav-menu a').forEach(link => {
             link.addEventListener('click', () => {
                 navMenu.classList.remove('active');
                 hamburger.classList.remove('active');
             });
         });
-        function updateCartCount() {
-    const cart = JSON.parse(localStorage.getItem('skai-cart')) || [];
-    const countElement = document.getElementById('cart-count');
-    if (countElement) {
-        countElement.innerText = cart.length;
-    }
-}
 
-// Appeler la fonction au chargement de la page
-updateCartCount();
+        // FONCTION DE MISE À JOUR SYNCHRONISÉE
+        function updateCartCount() {
+            const countElement = document.getElementById('cart-count');
+            const isVide = localStorage.getItem('skai_panier_vide');
+
+            if (countElement) {
+                // Si c'est vide (ou jamais défini), on affiche 0, sinon 1
+                if (isVide === 'true' || isVide === null) {
+                    countElement.innerText = "0";
+                } else {
+                    countElement.innerText = "1";
+                }
+            }
+        }
+
+        // Appeler au chargement
+        updateCartCount();
     </script>
 </body>
 </html>

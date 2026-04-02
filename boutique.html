@@ -8,7 +8,7 @@
 </head>
 <body>
 
-    <header>
+<header>
     <div class="header-left">
         <div class="hamburger" id="hamburger">
             <span></span>
@@ -41,59 +41,33 @@
     </nav>
 
     <main class="shop-container">
-        <header class="shop-header">
-            <h2>La Collection</h2>
-            <p>From Sénégal </p>
+        <header class="shop-header" style="text-align: center; padding: 40px 0;">
+            <h2 style="letter-spacing: 5px; text-transform: uppercase;">La Collection</h2>
+            <p style="color: #888;">From Sénégal</p>
         </header>
 
         <section class="product-grid">
-    <div class="product-card">
-        <div class="product-image">
-            <img src="" alt="Produit1 SKAI">
-            <div class="quick-add" 
-                 data-name="Produit1 SKAI " 
-                 data-price="15000" 
-                 data-image="">
-                 Ajouter au panier
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="produit1.jpg" alt="Produit1 SKAI">
+                    <div class="quick-add" onclick="ajouterAuPanier()">Ajouter au panier</div>
+                </div>
+                <div class="product-info">
+                    <h3>T-Shirt Nazir "Roots"</h3>
+                    <p>15.000 FCFA</p>
+                </div>
             </div>
-        </div>
-        <div class="product-info">
-            <h3>T-Shirt Nazir "Roots"</h3>
-            <p>15.000 FCFA</p>
-        </div>
-    </div>
-
-    <div class="product-card">
-        <div class="product-image">
-            <img src="" alt="Produit2 SKAI">
-            <div class="quick-add" 
-                 data-name="Produit2 SKAI" 
-                 data-price="25000" 
-                 data-image="">
-                 Ajouter au panier
-            </div>
-        </div>
-        <div class="product-info">
-            <h3>Hoodie Signature</h3>
-            <p>25.000 FCFA</p>
-        </div>
-    </div>
 
             <div class="product-card">
-        <div class="product-image">
-            <img src="" alt="Produit3 SKAI">
-            <div class="quick-add" 
-                 data-name="Produit3 SKAI" 
-                 data-price="25000" 
-                 data-image="">
-                 Ajouter au panier
+                <div class="product-image">
+                    <img src="produit2.jpg" alt="Produit2 SKAI">
+                    <div class="quick-add" onclick="ajouterAuPanier()">Ajouter au panier</div>
+                </div>
+                <div class="product-info">
+                    <h3>Hoodie Signature</h3>
+                    <p>25.000 FCFA</p>
+                </div>
             </div>
-        </div>
-        <div class="product-info">
-            <h3>Hoodie Signature</h3>
-            <p>25.000 FCFA</p>
-        </div>
-    </div>
         </section>
     </main>
 
@@ -106,46 +80,31 @@
         hamburger.classList.toggle('active');
     });
 
-    // --- FONCTION COMPTEUR ---
-    function updateCartCount() {
-        const cart = JSON.parse(localStorage.getItem('skai-cart')) || [];
-        document.getElementById('cart-count').innerText = cart.length;
+    // --- FONCTION AJOUT AU PANIER (SYNCHRONISÉE) ---
+    function ajouterAuPanier() {
+        // On dit à la mémoire que le panier n'est plus vide
+        localStorage.setItem('skai_panier_vide', 'false');
+        
+        // On met à jour le chiffre en haut immédiatement
+        updateCartCount();
+
+        // Animation visuelle sur le bouton (optionnel)
+        alert("Produit ajouté au panier !");
     }
 
-    // --- AJOUT AU PANIER ---
-    const buttons = document.querySelectorAll('.quick-add');
+    // --- MISE À JOUR DU COMPTEUR ---
+    function updateCartCount() {
+        const countElement = document.getElementById('cart-count');
+        const estVide = localStorage.getItem('skai_panier_vide');
 
-    buttons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            // 1. Récupérer les infos du produit cliqué
-            const product = {
-                name: btn.getAttribute('data-name'),
-                price: parseInt(btn.getAttribute('data-price')),
-                image: btn.getAttribute('data-image')
-            };
-
-            // 2. Récupérer le panier actuel
-            let cart = JSON.parse(localStorage.getItem('skai-cart')) || [];
-
-            // 3. Ajouter le nouveau produit
-            cart.push(product);
-
-            // 4. Sauvegarder dans la mémoire du navigateur (localStorage)
-            localStorage.setItem('skai-cart', JSON.stringify(cart));
-
-            // 5. Mettre à jour le compteur en haut à droite
-            updateCartCount();
-
-            // 6. Petite animation de confirmation
-            btn.innerText = "Ajouté ! ✓";
-            btn.style.backgroundColor = "#27ae60"; // Vert succès discret
-            
-            setTimeout(() => {
-                btn.innerText = "Ajouter au panier";
-                btn.style.backgroundColor = "var(--marron-skai)";
-            }, 1500);
-        });
-    });
+        if (countElement) {
+            if (estVide === 'false') {
+                countElement.innerText = "1";
+            } else {
+                countElement.innerText = "0";
+            }
+        }
+    }
 
     // Initialisation au chargement
     updateCartCount();
