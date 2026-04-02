@@ -50,25 +50,26 @@
             </div>
 
             <div class="cart-summary">
-                <h2>Résumé</h2>
-                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                    <span>Sous-total</span>
-                    <span>15 000 FCFA</span>
-                </div>
-                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                    <span>Livraison (Dakar)</span>
-                    <span>2 000 FCFA</span>
-                </div>
-                <hr>
-                <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem; margin-top: 10px;">
-                    <span>Total</span>
-                    <span>17 000 FCFA</span>
-                </div>
+    <h2>Résumé</h2>
+    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+        <span>Sous-total</span>
+        <span id="subtotal">15 000 FCFA</span>
+    </div>
+    
+    <hr>
+    <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem; margin-top: 10px;">
+        <span>Total</span>
+        <span id="total-cart">15 000 FCFA</span>
+    </div>
 
-                <button type="button" onclick="window.location.href='paiement.html'" class="checkout-btn">
-                    PROCÉDER AU PAIEMENT
-                </button>
-            </div>
+    <p style="font-size: 0.8rem; color: gray; margin-top: 10px;">
+        * Les frais de livraison seront calculés à l'étape suivante selon votre zone.
+    </p>
+
+    <button type="button" onclick="window.location.href='paiement.html'" class="checkout-btn">
+        PROCÉDER AU PAIEMENT
+    </button>
+</div>
         </div>
     </main>
 
