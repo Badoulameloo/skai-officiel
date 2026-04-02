@@ -90,33 +90,38 @@
     </main>
 
     <script>
-        // Fonction qui s'exécute dès que la page s'affiche
-        function verifierPanier() {
-            const estVide = localStorage.getItem('skai_panier_vide');
-            
-            // Si la mémoire dit que c'est vide OU si on n'a jamais rien mis
-            if (estVide === 'true') {
-                document.getElementById('full-cart-ui').style.display = 'none';
-                document.getElementById('empty-cart-msg').style.display = 'block';
-                document.getElementById('nav-counter').innerText = '0';
-            } else {
-                document.getElementById('full-cart-ui').style.display = 'block';
-                document.getElementById('empty-cart-msg').style.display = 'none';
-                document.getElementById('nav-counter').innerText = '1';
-            }
+    // 1. Fonction qui vérifie l'état et met à jour l'interface
+    function verifierPanier() {
+        const estVide = localStorage.getItem('skai_panier_vide');
+        const fullUI = document.getElementById('full-cart-ui');
+        const emptyMsg = document.getElementById('empty-cart-msg');
+        const counter = document.getElementById('nav-counter');
+        
+        // Si c'est vide (true)
+        if (estVide === 'true') {
+            if(fullUI) fullUI.style.display = 'none';
+            if(emptyMsg) emptyMsg.style.display = 'block';
+            if(counter) counter.innerText = '0';
+        } 
+        // Si c'est plein (false ou premier passage)
+        else {
+            if(fullUI) fullUI.style.display = 'block';
+            if(emptyMsg) emptyMsg.style.display = 'none';
+            if(counter) counter.innerText = '1';
         }
+    }
 
-        // Fonction pour supprimer l'article
-        function supprimerDuPanier() {
-            // On enregistre "vrai" pour le vide dans la mémoire
-            localStorage.setItem('skai_panier_vide', 'true');
-            // On relance la vérification pour mettre à jour l'écran
-            verifierPanier();
-        }
+    // 2. Fonction pour supprimer l'article
+    function supprimerDuPanier() {
+        // On enregistre l'état vide
+        localStorage.setItem('skai_panier_vide', 'true');
+        // On met à jour l'affichage immédiatement sans recharger
+        verifierPanier();
+    }
 
-        // Lancement au chargement
-        window.onload = verifierPanier;
-    </script>
+    // Lancer la vérification au chargement
+    window.onload = verifierPanier;
+</script>
 
 </body>
 </html>
