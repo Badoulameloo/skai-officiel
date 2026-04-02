@@ -10,7 +10,6 @@
     <header>
         <nav>
             <div class="logo">SKAÏ</div>
-            
         </nav>
     </header>
 
@@ -18,52 +17,55 @@
         <section class="checkout-container">
             <h1>Finaliser ma commande</h1>
             
-            <form id="payment-form">
+            <form id="payment-form" action="https://formspree.io/f/meeplzga" method="POST">
+                
                 <div class="form-group">
                     <label>Nom complet</label>
-                    <input type="text" required placeholder="Votre nom">
+                    <input type="text" name="Nom_Client" required placeholder="Votre nom">
                 </div>
                 
                 <div class="form-group">
                     <label>Téléphone (Orange Money / Wave)</label>
-                    <input type="tel" required placeholder="77 000 00 00">
+                    <input type="tel" name="Telephone" required placeholder="77 000 00 00">
                 </div>
 
                 <div class="form-group">
                     <label>Zone de Livraison (Dakar)</label>
-                    <select id="zone-livraison" required>
-                        <option value="0" selected disabled>Choisir votre quartier...</option>
-                            <option value="2000">Almadies - 2000 FCFA</option>
-                            <option value="1000">Amitié (1, 2, 3) - 1000 FCFA</option>
-                            <option value="1000">Baobab - 1000 FCFA</option>
-                            <option value="2500">Bel Air - 2500 FCFA</option>
-                            <option value="2500">Cambérène - 2500 FCFA</option>
-                            <option value="2000">Centenaire / Gibraltar - 2000 FCFA</option>
-                            <option value="2000">Colobane - 2000 FCFA</option>
-                            <option value="2000">Dalifort - 2000 FCFA</option>
-                            <option value="1500">Fann (Résidence, Hock) - 1500 FCFA</option>
-                            <option value="1500">Fass / Gueule Tapée - 1500 FCFA</option>
-                            <option value="3500">Guédiawaye - 3500 FCFA</option>
-                            <option value="2000">Hann / Maristes - 2000 FCFA</option>
-                            <option value="5000">Keur Massar / Keur Mbaye Fall - 5000 FCFA</option>
-                            <option value="1000">Liberté (1 à 6) - 1000 FCFA</option>
-                            <option value="5000">Malika - 5000 FCFA</option>
-                            <option value="1500">Mamelles - 1500 FCFA</option>
-                            <option value="1500">Médina / Rebeuss - 1500 FCFA</option>
-                            <option value="1000">Mermoz - 1000 FCFA</option>
-                            <option value="1500">Niary Tally - 1500 FCFA</option>
-                            <option value="2000">Ngor - 2000 FCFA</option>
-                            <option value="1500">Ouakam - 1500 FCFA</option>
-                            <option value="2000">Plateau - 2000 FCFA</option>
-                            <option value="1500">Point E - 1500 FCFA</option>
-                            <option value="1000">Sacré-Cœur (1, 2, 3) - 1000 FCFA</option>
-                            <option value="2000">Virage - 2000 FCFA</option>
-                            <option value="2000">Yoff - 2000 FCFA</option>
-                            <option value="5000">Yeumbeul (Nord / Sud) - 5000 FCFA</option>
-                            <option value="1500">Zone A / Zone B - 1500 FCFA</option>
-                            <option value="2000">Zone de Captage - 2000 FCFA</option>
+                    <select id="zone-livraison" name="Quartier_Livraison" required>
+                        <option value="" selected disabled>Choisir votre quartier...</option>
+                            <option value="Almadies - 2000">Almadies - 2000 FCFA</option>
+                            <option value="Amitié - 1000">Amitié (1, 2, 3) - 1000 FCFA</option>
+                            <option value="Baobab - 1000">Baobab - 1000 FCFA</option>
+                            <option value="Bel Air - 2500">Bel Air - 2500 FCFA</option>
+                            <option value="Cambérène - 2500">Cambérène - 2500 FCFA</option>
+                            <option value="Centenaire - 2000">Centenaire / Gibraltar - 2000 FCFA</option>
+                            <option value="Colobane - 2000">Colobane - 2000 FCFA</option>
+                            <option value="Dalifort - 2000">Dalifort - 2000 FCFA</option>
+                            <option value="Fann - 1500">Fann (Résidence, Hock) - 1500 FCFA</option>
+                            <option value="Fass - 1500">Fass / Gueule Tapée - 1500 FCFA</option>
+                            <option value="Guédiawaye - 3500">Guédiawaye - 3500 FCFA</option>
+                            <option value="Hann_Maristes - 2000">Hann / Maristes - 2000 FCFA</option>
+                            <option value="Keur_Massar - 5000">Keur Massar / Keur Mbaye Fall - 5000 FCFA</option>
+                            <option value="Liberté - 1000">Liberté (1 à 6) - 1000 FCFA</option>
+                            <option value="Malika - 5000">Malika - 5000 FCFA</option>
+                            <option value="Mamelles - 1500">Mamelles - 1500 FCFA</option>
+                            <option value="Médina_Rebeuss - 1500">Médina / Rebeuss - 1500 FCFA</option>
+                            <option value="Mermoz - 1000">Mermoz - 1000 FCFA</option>
+                            <option value="Niary_Tally - 1500">Niary Tally - 1500 FCFA</option>
+                            <option value="Ngor - 2000">Ngor - 2000 FCFA</option>
+                            <option value="Ouakam - 1500">Ouakam - 1500 FCFA</option>
+                            <option value="Plateau - 2000">Plateau - 2000 FCFA</option>
+                            <option value="Point_E - 1500">Point E - 1500 FCFA</option>
+                            <option value="Sacré-Cœur - 1000">Sacré-Cœur (1, 2, 3) - 1000 FCFA</option>
+                            <option value="Virage - 2000">Virage - 2000 FCFA</option>
+                            <option value="Yoff - 2000">Yoff - 2000 FCFA</option>
+                            <option value="Yeumbeul - 5000">Yeumbeul (Nord / Sud) - 5000 FCFA</option>
+                            <option value="Zone_A_B - 1500">Zone A / Zone B - 1500 FCFA</option>
+                            <option value="Zone_de_Captage - 2000">Zone de Captage - 2000 FCFA</option>
                     </select>
                 </div>
+
+                <input type="hidden" name="Commande" value="1x T-shirt / Hoodie SKAÏ (15.000 FCFA)">
 
                 <div class="payment-methods">
                     <h3>Mode de paiement</h3>
