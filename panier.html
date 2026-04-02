@@ -79,23 +79,40 @@
 </main>
 
 <script>
+// Fonction pour mettre à jour l'affichage au chargement de la page
+function chargerPanier() {
+    const panierVide = localStorage.getItem('panier_est_vide');
+    
+    if (panierVide === 'true') {
+        document.getElementById('cart-content').style.display = 'none';
+        document.getElementById('empty-message').style.display = 'block';
+        // On force le compteur à 0 si on a un élément d'en-tête pour ça
+        updateBadge(0);
+    } else {
+        // Par défaut, on affiche le produit (compteur à 1)
+        updateBadge(1);
+    }
+}
+
 function supprimerProduit() {
-    // 1. Cacher le produit et le résumé
+    // 1. Cacher l'affichage
     document.getElementById('cart-content').style.display = 'none';
-    // 2. Afficher le message panier vide
     document.getElementById('empty-message').style.display = 'block';
     
-    // Optionnel : vider le localStorage si tu l'utilises
-    localStorage.removeItem('panier'); 
+    // 2. ENREGISTRER l'état dans la mémoire du navigateur
+    localStorage.setItem('panier_est_vide', 'true');
+    
+    // 3. Mettre le compteur à 0
+    updateBadge(0);
 }
+
+function updateBadge(nb) {
+    const badge = document.querySelector('.cart-count'); // Assure-toi d'avoir cette classe sur ton chiffre "2"
+    if(badge) badge.innerText = nb;
+}
+
+// Lancer la vérification au chargement
+window.onload = chargerPanier;
 </script>
-
-    <footer style="text-align: center; margin-top: 50px; padding: 20px; color: gray;">
-        <p>&copy; 2026 SKAÏ - Design by Badoulameloo</p>
-    </footer>
-
-    <script>
-        console.log("Panier SKAÏ chargé. Prêt pour le paiement.");
-    </script>
 </body>
 </html>
