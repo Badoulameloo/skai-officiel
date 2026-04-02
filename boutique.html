@@ -149,6 +149,11 @@
 
     // Initialisation au chargement
     updateCartCount();
+    if (localStorage.getItem('skai_panier_vide') === 'true') {
+        const badge = document.querySelector('.cart-count');
+        if(badge) badge.innerText = '0';
+    }
+</script>
 </script>
 </body>
 </html>

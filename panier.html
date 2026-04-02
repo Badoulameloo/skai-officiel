@@ -6,113 +6,111 @@
     <title>Votre Panier - SKAÏ</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Styles rapides pour s'assurer que le panier est propre */
-        .cart-container { max-width: 1000px; margin: 50px auto; padding: 20px; display: flex; gap: 30px; justify-content: space-between; }
-        .cart-items { flex: 2; }
-        .cart-summary { flex: 1; background: #f9f9f9; padding: 20px; border-radius: 5px; height: fit-content; }
-        .product-card { display: flex; align-items: center; gap: 20px; border-bottom: 1px solid #eee; padding: 15px 0; }
-        .product-card img { width: 100px; height: 120px; object-fit: cover; }
+        .cart-container { max-width: 1000px; margin: 50px auto; padding: 20px; display: flex; gap: 30px; justify-content: space-between; flex-wrap: wrap; }
+        .cart-items { flex: 2; min-width: 300px; }
+        .cart-summary { flex: 1; background: #f9f9f9; padding: 25px; border-radius: 8px; height: fit-content; min-width: 250px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .product-card { display: flex; align-items: center; gap: 20px; border-bottom: 1px solid #eee; padding: 20px 0; }
+        .product-card img { width: 100px; height: 130px; object-fit: cover; border-radius: 4px; }
         .checkout-btn { 
-            width: 100%; 
-            background: #33241e; 
-            color: white; 
-            border: none; 
-            padding: 15px; 
-            text-transform: uppercase; 
-            font-weight: bold; 
-            cursor: pointer; 
-            margin-top: 20px;
-            transition: 0.3s;
+            width: 100%; background: #33241e; color: white; border: none; padding: 18px; 
+            text-transform: uppercase; font-weight: bold; cursor: pointer; margin-top: 20px; transition: 0.3s; 
         }
-        .checkout-btn:hover { background: #1a1310; }
+        .checkout-btn:hover { background: #1a1310; transform: translateY(-2px); }
+        .empty-msg { display: none; text-align: center; margin-top: 100px; font-family: sans-serif; }
+        .empty-msg a { color: #33241e; font-weight: bold; text-decoration: none; border-bottom: 2px solid #33241e; }
+        .cart-count { background: #33241e; color: white; padding: 2px 8px; border-radius: 50%; font-size: 0.8rem; vertical-align: middle; }
     </style>
 </head>
 <body>
     <header>
-        <nav style="display: flex; justify-content: center; padding: 20px;">
-            <div class="logo" style="font-size: 2rem; letter-spacing: 5px; font-weight: bold;">SKAÏ</div>
+        <nav style="display: flex; justify-content: space-between; align-items: center; padding: 20px 5%; border-bottom: 1px solid #eee;">
+            <div class="logo" style="font-size: 1.8rem; letter-spacing: 6px; font-weight: bold; cursor: pointer;" onclick="window.location.href='index.html'">SKAÏ</div>
+            <div class="nav-icons">
+                <a href="index.html" style="margin-right: 20px; text-decoration: none; color: black;">Accueil</a>
+                <a href="panier.html" style="text-decoration: none; color: black;">Panier (<span id="nav-counter" class="cart-count">1</span>)</a>
+            </div>
         </nav>
     </header>
 
     <main>
-    <h1 style="text-align: center; margin-top: 30px;">Votre Panier</h1>
-    
-    <div class="cart-container" id="cart-content">
-        <div class="cart-items" id="product-1">
-            <div class="product-card">
-                <img src="produit1.jpg" alt="Produit SKAÏ">
-                <div class="product-info">
-                    <h3>PRODUIT SKAÏ</h3>
-                    <p>15 000 FCFA</p>
-                    <button onclick="supprimerProduit()" style="background:none; border:none; color: #b22222; text-decoration: underline; cursor:pointer;">Supprimer</button>
+        <div id="full-cart-ui">
+            <h1 style="text-align: center; margin-top: 40px; font-family: serif;">VOTRE PANIER</h1>
+            
+            <div class="cart-container">
+                <div class="cart-items">
+                    <div class="product-card">
+                        <img src="produit1.jpg" alt="Produit SKAÏ">
+                        <div class="product-info">
+                            <h3 style="margin: 0; letter-spacing: 1px;">PRODUIT SKAÏ</h3>
+                            <p style="color: #555; margin: 10px 0;">15 000 FCFA</p>
+                            <button onclick="supprimerDuPanier()" style="background:none; border:none; color: #b22222; text-decoration: underline; cursor:pointer; padding: 0;">Supprimer</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cart-summary">
+                    <h2 style="margin-top: 0; font-size: 1.2rem; border-bottom: 1px solid #ddd; padding-bottom: 10px;">RÉSUMÉ</h2>
+                    <div style="display: flex; justify-content: space-between; margin: 20px 0;">
+                        <span>Sous-total</span>
+                        <span>15 000 FCFA</span>
+                    </div>
+                    <div style="font-size: 0.85rem; color: #666; font-style: italic; margin-bottom: 20px;">
+                        Livraison calculée à l'étape suivante.
+                    </div>
+                    <hr style="border: 0; border-top: 1px solid #ddd;">
+                    <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.3rem; margin-top: 15px;">
+                        <span>TOTAL</span>
+                        <span>15 000 FCFA</span>
+                    </div>
+
+                    <button type="button" onclick="window.location.href='paiement.html'" class="checkout-btn">
+                        PROCÉDER AU PAIEMENT
+                    </button>
                 </div>
             </div>
         </div>
 
-        <div class="cart-summary">
-            <h2>Résumé</h2>
-            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                <span>Sous-total</span>
-                <span id="subtotal">15 000 FCFA</span>
-            </div>
-            
-            <hr>
-            <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem; margin-top: 10px;">
-                <span>Total</span>
-                <span id="total-cart">15 000 FCFA</span>
-            </div>
-
-            <p style="font-size: 0.8rem; color: gray; margin-top: 10px;">
-                * Les frais de livraison seront calculés à l'étape suivante.
-            </p>
-
-            <button type="button" id="btn-payer" onclick="window.location.href='paiement.html'" class="checkout-btn">
-                PROCÉDER AU PAIEMENT
-            </button>
+        <div id="empty-cart-msg" class="empty-msg">
+            <h2 style="font-family: serif;">VOTRE PANIER EST VIDE</h2>
+            <p style="margin: 20px 0;">Il semblerait que vous n'ayez pas encore fait votre choix.</p>
+            <a href="index.html">RETOURNER À LA BOUTIQUE</a>
         </div>
-    </div>
+    </main>
 
-    <div id="empty-message" style="display:none; text-align:center; margin-top:50px;">
-        <p>Votre panier est vide.</p>
-        <a href="boutique.html" style="color: #33241e; font-weight:bold;">Retourner à la boutique</a>
-    </div>
-</main>
+    <footer style="text-align: center; margin-top: 80px; padding: 40px; border-top: 1px solid #eee; color: #888; font-size: 0.9rem;">
+        <p>&copy; 2026 SKAÏ - Dakar, Sénégal</p>
+    </footer>
 
-<script>
-// Fonction pour mettre à jour l'affichage au chargement de la page
-function chargerPanier() {
-    const panierVide = localStorage.getItem('panier_est_vide');
-    
-    if (panierVide === 'true') {
-        document.getElementById('cart-content').style.display = 'none';
-        document.getElementById('empty-message').style.display = 'block';
-        // On force le compteur à 0 si on a un élément d'en-tête pour ça
-        updateBadge(0);
-    } else {
-        // Par défaut, on affiche le produit (compteur à 1)
-        updateBadge(1);
-    }
-}
+    <script>
+        // 1. Vérifier l'état du panier au chargement
+        window.onload = function() {
+            if (localStorage.getItem('skai_panier_vide') === 'true') {
+                cacherPanier();
+            } else {
+                afficherPanier();
+            }
+        };
 
-function supprimerProduit() {
-    // 1. Cacher l'affichage
-    document.getElementById('cart-content').style.display = 'none';
-    document.getElementById('empty-message').style.display = 'block';
-    
-    // 2. ENREGISTRER l'état dans la mémoire du navigateur
-    localStorage.setItem('panier_est_vide', 'true');
-    
-    // 3. Mettre le compteur à 0
-    updateBadge(0);
-}
+        // 2. Fonction pour supprimer le produit
+        function supprimerDuPanier() {
+            // On enregistre dans la mémoire du navigateur que le panier est vide
+            localStorage.setItem('skai_panier_vide', 'true');
+            cacherPanier();
+        }
 
-function updateBadge(nb) {
-    const badge = document.querySelector('.cart-count'); // Assure-toi d'avoir cette classe sur ton chiffre "2"
-    if(badge) badge.innerText = nb;
-}
+        // 3. Masquer le panier et mettre à jour le compteur
+        function cacherPanier() {
+            document.getElementById('full-cart-ui').style.display = 'none';
+            document.getElementById('empty-cart-msg').style.display = 'block';
+            document.getElementById('nav-counter').innerText = '0';
+        }
 
-// Lancer la vérification au chargement
-window.onload = chargerPanier;
-</script>
+        // 4. Afficher le panier (si on veut le réactiver plus tard)
+        function afficherPanier() {
+            document.getElementById('full-cart-ui').style.display = 'block';
+            document.getElementById('empty-cart-msg').style.display = 'none';
+            document.getElementById('nav-counter').innerText = '1';
+        }
+    </script>
 </body>
 </html>
