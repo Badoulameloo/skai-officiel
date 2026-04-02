@@ -3,83 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SKAI | Boutique Officielle</title>
+    <title>SKAÏ - Official Store</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Styles spécifiques pour l'accueil SKAÏ */
+        body { margin: 0; font-family: 'Helvetica', sans-serif; overflow-x: hidden; }
+        
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 5%; border-bottom: 1px solid #eee; position: sticky; top: 0; background: white; z-index: 1000;
+        }
+
+        .logo { font-size: 2rem; letter-spacing: 8px; font-weight: bold; text-decoration: none; color: black; }
+        
+        .nav-links a { text-decoration: none; color: black; margin-left: 25px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+
+        .cart-count { background: #33241e; color: white; padding: 2px 7px; border-radius: 50%; font-size: 0.75rem; margin-left: 5px; }
+
+        .hero {
+            height: 80vh; display: flex; align-items: center; justify-content: center;
+            background: #f4f4f4; /* Remplace plus tard par une de tes photos de shooting */
+            text-align: center; flex-direction: column;
+        }
+
+        .hero h1 { font-size: 3.5rem; letter-spacing: 15px; margin-bottom: 20px; font-weight: 300; }
+        
+        .btn-shop {
+            padding: 15px 40px; background: #33241e; color: white; text-decoration: none;
+            letter-spacing: 2px; transition: 0.3s;
+        }
+        .btn-shop:hover { background: black; }
+
+        .featured { padding: 80px 5%; text-align: center; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 50px; }
+        
+        .product-item { text-align: left; text-decoration: none; color: black; }
+        .product-item img { width: 100%; height: 400px; object-position: center; object-fit: cover; transition: 0.5s; }
+        .product-item:hover img { opacity: 0.8; }
+    </style>
 </head>
 <body>
 
-    <header>
-    <div class="header-left">
-        <div class="hamburger" id="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
+    <nav>
+        <a href="index.html" class="logo">SKAÏ</a>
+        <div class="nav-links">
+            <a href="index.html">Accueil</a>
+            <a href="boutique.html">Boutique</a>
+            <a href="panier.html">Panier (<span id="main-cart-counter" class="cart-count">1</span>)</a>
         </div>
-    </div>
-
-    <div class="logo">SKAI</div>
-    
-    <div class="header-right">
-        <a href="panier.html" class="cart-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
-                <line x1="3" y1="6" x2="21" y2="6"></line>
-                <path d="M16 10a4 4 0 0 1-8 0"></path>
-            </svg>
-            <span id="cart-count">0</span>
-        </a>
-    </div>
-</header>
-
-    <nav class="nav-menu" id="nav-menu">
-        <ul>
-            <li><a href="index.html">Accueil</a></li>
-            <li><a href="boutique.html">Boutique</a></li>
-            <li><a href="propos.html">À Propos</a></li>
-            <li><a href="contact.html">Contact</a></li>
-        </ul>
     </nav>
 
-    <main>
-        <section class="hero">
-            <h1>Notre Collection</h1>
-            <p>Each piece is designed to be worn your way.</p>
-            <a href="boutique.html" class="btn">Découvrir</a>
-        </section>
-    </main>
+    <header class="hero">
+        <h1>SKAÏ</h1>
+        <p style="letter-spacing: 3px; margin-bottom: 30px; color: #666;">ESSENTIALS FROM DAKAR</p>
+        <a href="boutique.html" class="btn-shop">DÉCOUVRIR LA COLLECTION</a>
+    </header>
+
+    <section class="featured">
+        <h2 style="letter-spacing: 4px; font-weight: 300;">NOS PIÈCES</h2>
+        <div class="product-grid">
+            <a href="panier.html" class="product-item">
+                <img src="produit1.jpg" alt="Produit SKAÏ">
+                <h3 style="margin-top: 15px; font-size: 1rem; letter-spacing: 1px;">PRODUIT SKAÏ - NOIR</h3>
+                <p style="color: #888;">15 000 FCFA</p>
+            </a>
+            </div>
+    </section>
+
+    <footer style="text-align: center; padding: 60px; background: #fafafa; color: #999; font-size: 0.8rem; letter-spacing: 2px;">
+        <p>&copy; 2026 SKAÏ OFFICIAL - DAKAR</p>
+    </footer>
 
     <script>
-        const hamburger = document.getElementById('hamburger');
-        const navMenu = document.getElementById('nav-menu');
+        function syncCart() {
+            const isCartEmpty = localStorage.getItem('skai_panier_vide');
+            const counter = document.getElementById('main-cart-counter');
+            
+            if (isCartEmpty === 'true') {
+                counter.innerText = '0';
+            } else {
+                // Si rien n'est stocké ou que c'est false, on met 1 (ton produit test)
+                counter.innerText = '1';
+            }
+        }
 
-        hamburger.addEventListener('click', () => {
-            // On active/désactive le menu et la croix en même temps
-            navMenu.classList.toggle('active');
-            hamburger.classList.toggle('active');
-        });
+        // Exécuter au chargement
+        window.onload = syncCart;
 
-        // Optionnel : Fermer le menu si on clique sur un lien
-        document.querySelectorAll('.nav-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                navMenu.classList.remove('active');
-                hamburger.classList.remove('active');
-            });
-        });
-        function updateCartCount() {
-    const cart = JSON.parse(localStorage.getItem('skai-cart')) || [];
-    const countElement = document.getElementById('cart-count');
-    if (countElement) {
-        countElement.innerText = cart.length;
-    }
-}
-
-// Appeler la fonction au chargement de la page
-updateCartCount();
-    if (localStorage.getItem('skai_panier_vide') === 'true') {
-        const badge = document.querySelector('.cart-count');
-        if(badge) badge.innerText = '0';
-    }
-</script>
+        // Si tu ajoutes un bouton "Ajouter au panier" plus tard, 
+        // il devra faire : localStorage.setItem('skai_panier_vide', 'false');
     </script>
+
 </body>
 </html>
