@@ -35,43 +35,60 @@
     </header>
 
     <main>
-        <h1 style="text-align: center; margin-top: 30px;">Votre Panier</h1>
-        
-        <div class="cart-container">
-            <div class="cart-items">
-                <div class="product-card">
-                    <img src="produit1.jpg" alt="Produit SKAÏ">
-                    <div class="product-info">
-                        <h3>PRODUIT SKAÏ</h3>
-                        <p>15 000 FCFA</p>
-                        <button style="background:none; border:none; color: gray; text-decoration: underline; cursor:pointer;">Supprimer</button>
-                    </div>
+    <h1 style="text-align: center; margin-top: 30px;">Votre Panier</h1>
+    
+    <div class="cart-container" id="cart-content">
+        <div class="cart-items" id="product-1">
+            <div class="product-card">
+                <img src="produit1.jpg" alt="Produit SKAÏ">
+                <div class="product-info">
+                    <h3>PRODUIT SKAÏ</h3>
+                    <p>15 000 FCFA</p>
+                    <button onclick="supprimerProduit()" style="background:none; border:none; color: #b22222; text-decoration: underline; cursor:pointer;">Supprimer</button>
                 </div>
             </div>
-
-            <div class="cart-summary">
-    <h2>Résumé</h2>
-    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-        <span>Sous-total</span>
-        <span id="subtotal">15 000 FCFA</span>
-    </div>
-    
-    <hr>
-    <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem; margin-top: 10px;">
-        <span>Total</span>
-        <span id="total-cart">15 000 FCFA</span>
-    </div>
-
-    <p style="font-size: 0.8rem; color: gray; margin-top: 10px;">
-        * Les frais de livraison seront calculés à l'étape suivante selon votre zone.
-    </p>
-
-    <button type="button" onclick="window.location.href='paiement.html'" class="checkout-btn">
-        PROCÉDER AU PAIEMENT
-    </button>
-</div>
         </div>
-    </main>
+
+        <div class="cart-summary">
+            <h2>Résumé</h2>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                <span>Sous-total</span>
+                <span id="subtotal">15 000 FCFA</span>
+            </div>
+            
+            <hr>
+            <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem; margin-top: 10px;">
+                <span>Total</span>
+                <span id="total-cart">15 000 FCFA</span>
+            </div>
+
+            <p style="font-size: 0.8rem; color: gray; margin-top: 10px;">
+                * Les frais de livraison seront calculés à l'étape suivante.
+            </p>
+
+            <button type="button" id="btn-payer" onclick="window.location.href='paiement.html'" class="checkout-btn">
+                PROCÉDER AU PAIEMENT
+            </button>
+        </div>
+    </div>
+
+    <div id="empty-message" style="display:none; text-align:center; margin-top:50px;">
+        <p>Votre panier est vide.</p>
+        <a href="boutique.html" style="color: #33241e; font-weight:bold;">Retourner à la boutique</a>
+    </div>
+</main>
+
+<script>
+function supprimerProduit() {
+    // 1. Cacher le produit et le résumé
+    document.getElementById('cart-content').style.display = 'none';
+    // 2. Afficher le message panier vide
+    document.getElementById('empty-message').style.display = 'block';
+    
+    // Optionnel : vider le localStorage si tu l'utilises
+    localStorage.removeItem('panier'); 
+}
+</script>
 
     <footer style="text-align: center; margin-top: 50px; padding: 20px; color: gray;">
         <p>&copy; 2026 SKAÏ - Design by Badoulameloo</p>
