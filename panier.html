@@ -3,151 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Panier | SKAI</title>
+    <title>Votre Panier - SKAÏ</title>
     <link rel="stylesheet" href="style.css">
-    <button onclick="window.location.href='paiement.html'">Procéder au paiement</button>
+    <style>
+        /* Styles rapides pour s'assurer que le panier est propre */
+        .cart-container { max-width: 1000px; margin: 50px auto; padding: 20px; display: flex; gap: 30px; justify-content: space-between; }
+        .cart-items { flex: 2; }
+        .cart-summary { flex: 1; background: #f9f9f9; padding: 20px; border-radius: 5px; height: fit-content; }
+        .product-card { display: flex; align-items: center; gap: 20px; border-bottom: 1px solid #eee; padding: 15px 0; }
+        .product-card img { width: 100px; height: 120px; object-fit: cover; }
+        .checkout-btn { 
+            width: 100%; 
+            background: #33241e; 
+            color: white; 
+            border: none; 
+            padding: 15px; 
+            text-transform: uppercase; 
+            font-weight: bold; 
+            cursor: pointer; 
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+        .checkout-btn:hover { background: #1a1310; }
+    </style>
 </head>
 <body>
-
     <header>
-        <div class="header-left">
-            <div class="hamburger" id="hamburger">
-                <span></span><span></span><span></span>
-            </div>
-        </div>
-        <div class="logo">SKAI</div>
-        <div class="header-right"></div>
+        <nav style="display: flex; justify-content: center; padding: 20px;">
+            <div class="logo" style="font-size: 2rem; letter-spacing: 5px; font-weight: bold;">SKAÏ</div>
+        </nav>
     </header>
 
-    <nav class="nav-menu" id="nav-menu">
-        <ul>
-            <li><a href="index.html">Accueil</a></li>
-            <li><a href="boutique.html">Boutique</a></li>
-            <li><a href="propos.html">À Propos</a></li>
-            <li><a href="contact.html">Contact</a></li>
-        </ul>
-    </nav>
-
-    <main class="cart-container">
-        <h2 class="cart-title">Votre Panier</h2>
-
-        <div class="cart-content">
-            <div id="cart-items" class="cart-items">
+    <main>
+        <h1 style="text-align: center; margin-top: 30px;">Votre Panier</h1>
+        
+        <div class="cart-container">
+            <div class="cart-items">
+                <div class="product-card">
+                    <img src="produit1.jpg" alt="Produit SKAÏ">
+                    <div class="product-info">
+                        <h3>PRODUIT SKAÏ</h3>
+                        <p>15 000 FCFA</p>
+                        <button style="background:none; border:none; color: gray; text-decoration: underline; cursor:pointer;">Supprimer</button>
+                    </div>
                 </div>
+            </div>
 
             <div class="cart-summary">
-                <h3>Résumé</h3>
-                <div class="summary-line">
+                <h2>Résumé</h2>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
                     <span>Sous-total</span>
-                    <span id="subtotal">0 FCFA</span>
+                    <span>15 000 FCFA</span>
                 </div>
-                <div class="summary-line">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
                     <span>Livraison (Dakar)</span>
-                    <span id="shipping-cost">2.000 FCFA</span>
+                    <span>2 000 FCFA</span>
                 </div>
                 <hr>
-                <div class="summary-line total">
+                <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem; margin-top: 10px;">
                     <span>Total</span>
-                    <strong id="final-total">0 FCFA</strong>
+                    <span>17 000 FCFA</span>
                 </div>
-                <button class="checkout-btn" id="checkout-btn">Procéder au paiement</button>
+
+                <button type="button" onclick="window.location.href='paiement.html'" class="checkout-btn">
+                    PROCÉDER AU PAIEMENT
+                </button>
             </div>
         </div>
     </main>
 
+    <footer style="text-align: center; margin-top: 50px; padding: 20px; color: gray;">
+        <p>&copy; 2026 SKAÏ - Design by Badoulameloo</p>
+    </footer>
+
     <script>
-        // --- GESTION DU MENU ---
-        const hamburger = document.getElementById('hamburger');
-        const navMenu = document.getElementById('nav-menu');
-        hamburger.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-            hamburger.classList.toggle('active');
-        });
-
-        // --- LOGIQUE DYNAMIQUE DU PANIER ---
-        const cartItemsContainer = document.getElementById('cart-items');
-        const subtotalElement = document.getElementById('subtotal');
-        const totalElement = document.getElementById('final-total');
-        const shippingCost = 2000;
-
-        // Fonction pour charger et afficher le panier
-        function displayCart() {
-            // On récupère les données (ou un tableau vide si rien n'existe)
-            let cart = JSON.parse(localStorage.getItem('skai-cart')) || [];
-            cartItemsContainer.innerHTML = '';
-            let subtotal = 0;
-
-            if (cart.length === 0) {
-                cartItemsContainer.innerHTML = `
-                    <div style="text-align:center; padding: 50px 0;">
-                        <p>Votre panier est vide.</p>
-                        <a href="boutique.html" style="color:var(--marron-skai); font-size:12px; text-transform:uppercase; letter-spacing:2px; display:inline-block; margin-top:20px;">Retourner à la boutique</a>
-                    </div>`;
-                subtotalElement.innerText = "0 FCFA";
-                totalElement.innerText = "0 FCFA";
-                document.getElementById('shipping-cost').innerText = "0 FCFA";
-                return;
-            }
-
-            cart.forEach((item, index) => {
-                subtotal += item.price;
-                cartItemsContainer.innerHTML += `
-                    <div class="cart-item" data-index="${index}">
-                        <div class="item-info">
-                            <img src="${item.image}" alt="${item.name}">
-                            <div>
-                                <h4>${item.name}</h4>
-                                <p class="item-price">${item.price.toLocaleString()} FCFA</p>
-                                <button class="remove-btn" onclick="removeItem(${index})">Supprimer</button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-
-            const total = subtotal + shippingCost;
-            subtotalElement.innerText = subtotal.toLocaleString() + " FCFA";
-            totalElement.innerText = total.toLocaleString() + " FCFA";
-        }
-
-        // Fonction pour supprimer un article
-        window.removeItem = function(index) {
-            let cart = JSON.parse(localStorage.getItem('skai-cart')) || [];
-            
-            // Animation de sortie
-            const element = document.querySelector(`[data-index="${index}"]`);
-            element.style.opacity = '0';
-            element.style.transform = 'translateX(-20px)';
-            
-            setTimeout(() => {
-                cart.splice(index, 1); // Retire l'élément du tableau
-                localStorage.setItem('skai-cart', JSON.stringify(cart));
-                displayCart(); // Rafraîchit l'affichage
-            }, 300);
-        };
-
-        // Bouton Paiement
-        document.getElementById('checkout-btn').addEventListener('click', () => {
-            let cart = JSON.parse(localStorage.getItem('skai-cart')) || [];
-            if (cart.length > 0) {
-                alert("Redirection vers PayTech / Wave pour un montant de " + totalElement.innerText);
-            } else {
-                alert("Votre panier est vide !");
-            }
-        });
-        function updateCartCount() {
-    const cart = JSON.parse(localStorage.getItem('skai-cart')) || [];
-    const countElement = document.getElementById('cart-count');
-    if (countElement) {
-        countElement.innerText = cart.length;
-    }
-}
-
-// Appeler la fonction au chargement de la page
-updateCartCount();
-
-        // Charger le panier au démarrage
-        displayCart();
+        console.log("Panier SKAÏ chargé. Prêt pour le paiement.");
     </script>
 </body>
 </html>
