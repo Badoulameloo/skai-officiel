@@ -89,21 +89,28 @@
             return;
         }
 
-        // On enregistre les infos
+        // On enregistre les infos dans la mémoire
         localStorage.setItem('skai_panier_vide', 'false');
         localStorage.setItem('skai_taille_choisie', taille);
         
         if (mode === 'direct') {
-            // "Acheter maintenant" envoie directement au paiement
+            // "Acheter maintenant" : on fonce au paiement
             window.location.href = "paiement.html";
         } else {
-            // "Ajouter au panier" envoie à la page panier
-            alert("C'est bon ! Article ajouté en taille " + taille);
-            window.location.href = "panier.html";
+            // "Ajouter au panier" : on demande au client ce qu'il veut faire
+            const choix = confirm("Article ajouté en taille " + taille + " ! \n\nVoulez-vous voir votre panier ? \n(Cliquez sur 'Annuler' pour continuer vos achats)");
+            
+            if (choix) {
+                // L'utilisateur a cliqué sur OK
+                window.location.href = "panier.html";
+            } else {
+                // L'utilisateur a cliqué sur Annuler -> On reste sur la boutique
+                window.location.href = "boutique.html";
+            }
         }
     }
 
-    // Retirer l'erreur quand l'utilisateur change de taille
+    // Retirer l'erreur rouge quand l'utilisateur choisit enfin une taille
     document.getElementById('size-select').addEventListener('change', function() {
         this.classList.remove('error');
     });
