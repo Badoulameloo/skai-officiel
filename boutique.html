@@ -57,6 +57,7 @@
 </main>
 
 <script>
+    // --- GESTION DU MENU ---
     const hamburger = document.getElementById('hamburger');
     const navMenu = document.getElementById('nav-menu');
     if(hamburger) {
@@ -66,14 +67,30 @@
         });
     }
 
+    // --- MISE À JOUR DU COMPTEUR (VERSION BÉTON) ---
     function updateCartCount() {
         const countElement = document.getElementById('cart-count');
         const estVide = localStorage.getItem('skai_panier_vide');
+
         if (countElement) {
-            countElement.innerText = (estVide === 'false') ? "1" : "0";
+            // On vérifie strictement si c'est 'false' (donc plein)
+            // Dans tous les autres cas (null, 'true', etc.), on affiche 0
+            if (estVide === 'false') {
+                countElement.innerText = "1";
+            } else {
+                countElement.innerText = "0";
+            }
         }
     }
-    updateCartCount();
+
+    // Force la mise à jour quand on arrive sur la page
+    window.onload = updateCartCount;
+
+    // Force la mise à jour même si on revient en arrière avec le bouton "Précédent"
+    window.addEventListener('pageshow', function(event) {
+        updateCartCount();
+    });
+</script>
 </script>
 </body>
 </html>
