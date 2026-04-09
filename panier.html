@@ -78,44 +78,69 @@
 
     <script>
     function verifierPanier() {
-        const estVide = localStorage.getItem('skai_panier_vide');
-        const nom = localStorage.getItem('skai_nom_produit');
-        const taille = localStorage.getItem('skai_taille_choisie');
+        // 1. On récupère la LISTE des produits
+        const panier = JSON.parse(localStorage.getItem('skai_panier')) || [];
         
         const fullUI = document.getElementById('full-cart-ui');
         const emptyMsg = document.getElementById('empty-cart-msg');
         const counter = document.getElementById('nav-counter');
+        const containerProduits = document.querySelector('.cart-items');
 
-        // Condition : il faut que ce ne soit pas vide ET qu'un nom de produit existe
-        if (estVide === 'false' && nom) {
+        // Mise à jour du compteur en haut
+        if (counter) counter.innerText = panier.length;
+
+        if (panier.length > 0) {
             fullUI.style.display = 'block';
             emptyMsg.style.display = 'none';
-            counter.innerText = "1";
+
+            // 2. On vide le container actuel pour le reconstruire proprement
+            containerProduits.innerHTML = '';
+
+            // 3. On boucle sur chaque produit du tableau pour l'afficher
+            panier.forEach((produit, index) => {
+                containerProduits.innerHTML += `
+                    <div class="product-card" style="display: flex; gap: 20px; padding: 20px 0; border-bottom: 1px solid #eee;">
+                        <img src="produit1.jpg" alt="${produit.nom}" style="width: 110px; height: 140px; object-fit: cover;">
+                        <div class="product-info">
+                            <h3 style="margin: 0;">${produit.nom}</h3>
+                            <p style="margin: 5px 0; color: #888;">Taille : <span style="font-weight: bold;">${produit.taille}</span></p>
+                            <p style="margin: 10px 0; color: #666; font-weight: bold;">15 000 FCFA</p>
+                            <button onclick="supprimerArticle(${index})" style="background:none; border:none; color: #b22222; text-decoration: underline; cursor:pointer; padding:0;">Supprimer</button>
+                        </div>
+                    </div>
+                `;
+            });
             
-            // On affiche les vraies infos
-            document.getElementById('display-name').innerText = nom;
-            document.getElementById('display-size').innerText = taille;
+            // Mise à jour du prix total (Exemple simple)
+            const total = panier.length * 15000;
+            document.getElementById('total-prix').innerText = total.toLocaleString() + " FCFA";
+            document.getElementById('sous-total').innerText = total.toLocaleString() + " FCFA";
+
         } else {
             fullUI.style.display = 'none';
             emptyMsg.style.display = 'block';
-            counter.innerText = "0";
         }
     }
 
-    function supprimerTout() {
-    // On vide le tableau
-    localStorage.removeItem('skai_panier');
-    localStorage.setItem('skai_panier_vide', 'true');
+    function supprimerArticle(index) {
+        let panier = JSON.parse(localStorage.getItem('skai_panier')) || [];
+        
+        // On retire l'article précis grâce à son index
+        panier.splice(index, 1);
+        
+        // On sauvegarde le nouveau tableau
+        localStorage.setItem('skai_panier', JSON.stringify(panier));
+        
+        // Si c'est vide, on remet l'état vide
+        if (panier.length === 0) {
+            localStorage.setItem('skai_panier_vide', 'true');
+        }
 
-    // On rafraîchit l'affichage
-    verifierPanier(); // Ta fonction qui cache/montre les blocs
-    updateCartCount(); // Pour mettre le 0 en haut
-    
-    alert("Panier vidé !");
-}
+        // On rafraîchit la page
+        verifierPanier();
+    }
 
-    // On lance la vérification dès que la page charge
     window.onload = verifierPanier;
-    </script>
+</script>
 </body>
 </html>
