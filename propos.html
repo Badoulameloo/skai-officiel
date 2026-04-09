@@ -75,11 +75,20 @@
         });
 
         function updateCartCount() {
-            const cart = JSON.parse(localStorage.getItem('skai-cart')) || [];
-            const count = document.getElementById('cart-count');
-            if(count) count.innerText = cart.length;
-        }
-        updateCartCount();
+    const countElement = document.getElementById('cart-count') || document.getElementById('nav-counter');
+    
+    // On récupère la liste des produits (le tableau)
+    const panier = JSON.parse(localStorage.getItem('skai_panier')) || [];
+    
+    if (countElement) {
+        // On affiche la longueur du tableau (nombre d'articles)
+        countElement.innerText = panier.length;
+    }
+}
+
+// On l'exécute partout
+window.addEventListener('pageshow', updateCartCount);
+updateCartCount();
     </script>
 </body>
 </html>

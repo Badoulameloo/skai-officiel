@@ -102,16 +102,17 @@
         }
     }
 
-    function supprimerDuPanier() {
-        // 1. On vide tout proprement
-        localStorage.clear();
-        localStorage.setItem('skai_panier_vide', 'true');
+    function supprimerTout() {
+    // On vide le tableau
+    localStorage.removeItem('skai_panier');
+    localStorage.setItem('skai_panier_vide', 'true');
 
-        // 2. On rafraîchit l'affichage immédiatement
-        verifierPanier();
-        
-        alert("Produit supprimé !");
-    }
+    // On rafraîchit l'affichage
+    verifierPanier(); // Ta fonction qui cache/montre les blocs
+    updateCartCount(); // Pour mettre le 0 en haut
+    
+    alert("Panier vidé !");
+}
 
     // On lance la vérification dès que la page charge
     window.onload = verifierPanier;

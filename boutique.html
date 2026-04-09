@@ -76,23 +76,21 @@
         });
     }
 
-    // --- MISE À JOUR DU COMPTEUR (SYNCHRO TOTALE) ---
     function updateCartCount() {
-        const countElement = document.getElementById('cart-count');
-        
-        // On récupère l'état du panier
-        const estVide = localStorage.getItem('skai_panier_vide');
-
-        if (countElement) {
-            // Logique stricte : seulement si c'est explicitement 'false', on affiche 1
-            if (estVide === 'true') {
-                countElement.innerText = "1";
-            } else {
-                // Dans tous les autres cas (null, 'true', ou après suppression), on affiche 0
-                countElement.innerText = "0";
-            }
-        }
+    const countElement = document.getElementById('cart-count') || document.getElementById('nav-counter');
+    
+    // On récupère la liste des produits (le tableau)
+    const panier = JSON.parse(localStorage.getItem('skai_panier')) || [];
+    
+    if (countElement) {
+        // On affiche la longueur du tableau (nombre d'articles)
+        countElement.innerText = panier.length;
     }
+}
+
+// On l'exécute partout
+window.addEventListener('pageshow', updateCartCount);
+updateCartCount();
 
     // Se lance au chargement initial
     window.onload = updateCartCount;

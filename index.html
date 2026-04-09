@@ -66,19 +66,17 @@
 
        function updateCartCount() {
     const countElement = document.getElementById('cart-count') || document.getElementById('nav-counter');
-    const estVide = localStorage.getItem('skai_panier_vide');
-
+    
+    // On récupère la liste des produits (le tableau)
+    const panier = JSON.parse(localStorage.getItem('skai_panier')) || [];
+    
     if (countElement) {
-        // Strictement 'false' veut dire qu'il y a un produit
-        if (estVide === 'false') {
-            countElement.innerText = "1";
-        } else {
-            countElement.innerText = "0";
-            // On s'assure que si c'est vide, c'est bien marqué 'true'
-            localStorage.setItem('skai_panier_vide', 'true');
-        }
+        // On affiche la longueur du tableau (nombre d'articles)
+        countElement.innerText = panier.length;
     }
 }
+
+// On l'exécute partout
 window.addEventListener('pageshow', updateCartCount);
 updateCartCount();
         function syncCart() {
