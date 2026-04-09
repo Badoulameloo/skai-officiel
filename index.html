@@ -65,20 +65,24 @@
         });
 
        function updateCartCount() {
-    const countElement = document.getElementById('cart-count') || document.getElementById('nav-counter');
-    
-    // On récupère la liste des produits (le tableau)
-    const panier = JSON.parse(localStorage.getItem('skai_panier')) || [];
-    
-    if (countElement) {
-        // On affiche la longueur du tableau (nombre d'articles)
-        countElement.innerText = panier.length;
+        // On récupère l'élément du compteur (vérifie bien que l'ID est 'cart-count')
+        const countElement = document.getElementById('cart-count') || document.querySelector('.cart-count');
+        
+        // On récupère le tableau des produits
+        const panier = JSON.parse(localStorage.getItem('skai_panier')) || [];
+        
+        if (countElement) {
+            // On affiche le nombre réel d'articles
+            countElement.innerText = panier.length;
+        }
     }
-}
 
-// On l'exécute partout
-window.addEventListener('pageshow', updateCartCount);
-updateCartCount();
+    // Se lance dès que la page est chargée
+    window.onload = updateCartCount;
+
+    // Se lance quand on revient en arrière (très important pour le mobile)
+    window.addEventListener('pageshow', updateCartCount);
+    
         function syncCart() {
         const countElement = document.getElementById('cart-count') || document.getElementById('nav-counter');
         const estVide = localStorage.getItem('skai_panier_vide');
