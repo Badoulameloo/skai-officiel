@@ -49,9 +49,11 @@
     </main>
 
     <script>
-        const hamburger = document.getElementById('hamburger');
-        const navMenu = document.getElementById('nav-menu');
+    // --- 1. GESTION DU MENU MOBILE ---
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
 
+    if (hamburger && navMenu) {
         hamburger.addEventListener('click', () => {
             navMenu.classList.toggle('active');
             hamburger.classList.toggle('active');
@@ -63,46 +65,35 @@
                 hamburger.classList.remove('active');
             });
         });
+    }
 
-       function updateCartCount() {
-        // On récupère l'élément du compteur (vérifie bien que l'ID est 'cart-count')
-        const countElement = document.getElementById('cart-count') || document.querySelector('.cart-count');
-        
-        // On récupère le tableau des produits
-        const panier = JSON.parse(localStorage.getItem('skai_panier')) || [];
+    // --- 2. FONCTION UNIQUE POUR LE COMPTEUR ---
+    function updateCartCount() {
+        // On cherche l'élément du compteur (ID ou Classe)
+        const countElement = document.getElementById('cart-count') || document.querySelector('.cart-count') || document.getElementById('nav-counter');
         
         if (countElement) {
-            // On affiche le nombre réel d'articles
+            // On récupère le tableau des produits
+            const panier = JSON.parse(localStorage.getItem('skai_panier')) || [];
+            
+            // On affiche le nombre REEL d'articles dans le tableau
             countElement.innerText = panier.length;
         }
     }
 
-    // Se lance dès que la page est chargée
-    window.onload = updateCartCount;
+    // --- 3. DECLENCHEURS (On enlève les doublons) ---
 
-    // Se lance quand on revient en arrière (très important pour le mobile)
+    // Au chargement de la page
+    window.addEventListener('load', updateCartCount);
+
+    // Au retour sur la page (bouton précédent du navigateur)
     window.addEventListener('pageshow', updateCartCount);
-    
-        function syncCart() {
-        const countElement = document.getElementById('cart-count') || document.getElementById('nav-counter');
-        const estVide = localStorage.getItem('skai_panier_vide');
 
-        if (countElement) {
-            if (estVide === 'false') {
-                countElement.innerText = "1";
-            } else {
-                countElement.innerText = "0";
-            }
-        }
-    }
+    // Si tu modifies le panier dans un autre onglet
+    window.addEventListener('storage', updateCartCount);
 
-    // Se lance au chargement
-    window.onload = syncCart;
-    // Se lance quand on revient en arrière
-    window.onpageshow = syncCart;
-
-        // Appeler au chargement
-        updateCartCount();
-    </script>
+    // Lancement immédiat
+    updateCartCount();
+</script>
 </body>
 </html>
