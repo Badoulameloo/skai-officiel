@@ -25,6 +25,15 @@
     </div>
 </header>
 
+<nav class="nav-menu" id="nav-menu">
+    <ul>
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="boutique.html">Boutique</a></li>
+        <li><a href="propos.html">À Propos</a></li>
+        <li><a href="contact.html">Contact</a></li>
+    </ul>
+</nav>
+
 <main class="shop-container">
     <header class="shop-header" style="text-align: center; padding: 40px 0;">
         <h2 style="letter-spacing: 5px; text-transform: uppercase;">La Collection</h2>
@@ -57,7 +66,7 @@
 </main>
 
 <script>
-    // --- GESTION DU MENU ---
+    // --- GESTION DU MENU HAMBURGER ---
     const hamburger = document.getElementById('hamburger');
     const navMenu = document.getElementById('nav-menu');
     if(hamburger) {
@@ -67,50 +76,32 @@
         });
     }
 
+    // --- MISE À JOUR DU COMPTEUR (SYNCHRO TOTALE) ---
     function updateCartCount() {
-    const countElement = document.getElementById('cart-count') || document.getElementById('nav-counter');
-    const estVide = localStorage.getItem('skai_panier_vide');
-
-    if (countElement) {
-        // Strictement 'false' veut dire qu'il y a un produit
-        if (estVide === 'false') {
-            countElement.innerText = "1";
-        } else {
-            countElement.innerText = "0";
-            // On s'assure que si c'est vide, c'est bien marqué 'true'
-            localStorage.setItem('skai_panier_vide', 'true');
-        }
-    }
-}
-window.addEventListener('pageshow', updateCartCount);
-updateCartCount();
-    
-
-    // Force la mise à jour quand on arrive sur la page
-    window.onload = updateCartCount;
-
-    // Force la mise à jour même si on revient en arrière avec le bouton "Précédent"
-    window.addEventListener('pageshow', function(event) {
-        updateCartCount();
-        function syncCart() {
-        const countElement = document.getElementById('cart-count') || document.getElementById('nav-counter');
+        const countElement = document.getElementById('cart-count');
+        
+        // On récupère l'état du panier
         const estVide = localStorage.getItem('skai_panier_vide');
 
         if (countElement) {
+            // Logique stricte : seulement si c'est explicitement 'false', on affiche 1
             if (estVide === 'false') {
                 countElement.innerText = "1";
             } else {
+                // Dans tous les autres cas (null, 'true', ou après suppression), on affiche 0
                 countElement.innerText = "0";
             }
         }
     }
 
-    // Se lance au chargement
-    window.onload = syncCart;
-    // Se lance quand on revient en arrière
-    window.onpageshow = syncCart;
+    // Se lance au chargement initial
+    window.onload = updateCartCount;
+
+    // Se lance même si on revient en arrière (Back button)
+    window.addEventListener('pageshow', function(event) {
+        updateCartCount();
     });
 </script>
-</script>
+
 </body>
 </html>
