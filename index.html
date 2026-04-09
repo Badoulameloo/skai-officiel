@@ -64,20 +64,23 @@
             });
         });
 
-        // FONCTION DE MISE À JOUR SYNCHRONISÉE
-        function updateCartCount() {
-            const countElement = document.getElementById('cart-count');
-            const isVide = localStorage.getItem('skai_panier_vide');
+       function updateCartCount() {
+    const countElement = document.getElementById('cart-count') || document.getElementById('nav-counter');
+    const estVide = localStorage.getItem('skai_panier_vide');
 
-            if (countElement) {
-                // Si c'est vide (ou jamais défini), on affiche 0, sinon 1
-                if (isVide === 'true' || isVide === null) {
-                    countElement.innerText = "0";
-                } else {
-                    countElement.innerText = "1";
-                }
-            }
+    if (countElement) {
+        // Strictement 'false' veut dire qu'il y a un produit
+        if (estVide === 'false') {
+            countElement.innerText = "1";
+        } else {
+            countElement.innerText = "0";
+            // On s'assure que si c'est vide, c'est bien marqué 'true'
+            localStorage.setItem('skai_panier_vide', 'true');
         }
+    }
+}
+window.addEventListener('pageshow', updateCartCount);
+updateCartCount();
         function syncCart() {
         const countElement = document.getElementById('cart-count') || document.getElementById('nav-counter');
         const estVide = localStorage.getItem('skai_panier_vide');

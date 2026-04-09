@@ -102,6 +102,23 @@
             window.location.href = choix ? "panier.html" : "boutique.html";
         }
     }
+    function updateCartCount() {
+    const countElement = document.getElementById('cart-count') || document.getElementById('nav-counter');
+    const estVide = localStorage.getItem('skai_panier_vide');
+
+    if (countElement) {
+        // Strictement 'false' veut dire qu'il y a un produit
+        if (estVide === 'false') {
+            countElement.innerText = "1";
+        } else {
+            countElement.innerText = "0";
+            // On s'assure que si c'est vide, c'est bien marqué 'true'
+            localStorage.setItem('skai_panier_vide', 'true');
+        }
+    }
+}
+window.addEventListener('pageshow', updateCartCount);
+updateCartCount();
 
     // Retirer l'erreur rouge quand l'utilisateur choisit enfin une taille
     document.getElementById('size-select').addEventListener('change', function() {

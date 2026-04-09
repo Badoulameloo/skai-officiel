@@ -107,15 +107,22 @@
     }
 }
     function supprimerDuPanier() {
-    // 1. On change la valeur en 'true' (donc vide)
-    localStorage.setItem('skai_panier_vide', 'true');
+    // 1. On vide COMPLÈTEMENT la mémoire locale pour SKAÏ
+    localStorage.clear(); // Ça efface tout : nom, taille, et l'état vide
     
-    // 2. On supprime les détails du produit pour éviter qu'ils ne reviennent
-    localStorage.removeItem('skai_nom_produit');
-    localStorage.removeItem('skai_taille_choisie');
+    // 2. On force l'état vide pour être sûr
+    localStorage.setItem('skai_panier_vide', 'true');
 
-    // 3. On rafraîchit l'affichage
-    verifierPanier(); 
+    // 3. On met à jour l'affichage immédiatement sur la page
+    const fullUI = document.getElementById('full-cart-ui');
+    const emptyMsg = document.getElementById('empty-cart-msg');
+    const counter = document.getElementById('nav-counter'); // ou 'cart-count'
+
+    if(fullUI) fullUI.style.display = 'none';
+    if(emptyMsg) emptyMsg.style.display = 'block';
+    if(counter) counter.innerText = '0';
+    
+    alert("Panier vidé !");
 }
 
     // On lance la vérification au chargement
