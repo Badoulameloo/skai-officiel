@@ -50,17 +50,16 @@
                 </div>
 
                 <div class="cart-summary">
-                    <h2 style="margin-top: 0; font-size: 1.1rem; border-bottom: 1px solid #ddd; padding-bottom: 10px;">RÉSUMÉ</h2>
-                    <div style="display: flex; justify-content: space-between; margin: 20px 0;">
-                        <span>Sous-total</span>
-                        <span>15 000 FCFA</span>
-                    </div>
-                    <p style="font-size: 0.8rem; color: #888; font-style: italic;">Livraison calculée à l'étape suivante.</p>
-                    <hr style="border: 0; border-top: 1px solid #ddd;">
-                    <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem; margin-top: 15px;">
-                        <span>TOTAL</span>
-                        <span>15 000 FCFA</span>
-                    </div>
+    <h2>RÉSUMÉ</h2>
+    <div style="display: flex; justify-content: space-between; margin: 20px 0;">
+        <span>Sous-total</span>
+        <span id="sous-total">0 FCFA</span> </div>
+    ...
+    <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem; margin-top: 15px;">
+        <span>TOTAL</span>
+        <span id="total-prix">0 FCFA</span> </div>
+    ...
+</div>
 
                     <button type="button" onclick="window.location.href='paiement.html'" class="checkout-btn">
                         PROCÉDER AU PAIEMENT
@@ -78,49 +77,59 @@
 
     <script>
     function verifierPanier() {
-        // 1. On récupère la LISTE des produits
-        const panier = JSON.parse(localStorage.getItem('skai_panier')) || [];
-        
-        const fullUI = document.getElementById('full-cart-ui');
-        const emptyMsg = document.getElementById('empty-cart-msg');
-        const counter = document.getElementById('nav-counter');
-        const containerProduits = document.querySelector('.cart-items');
+    const panier = JSON.parse(localStorage.getItem('skai_panier')) || [];
+    const fullUI = document.getElementById('full-cart-ui');
+    const emptyMsg = document.getElementById('empty-cart-msg');
+    const counter = document.getElementById('nav-counter');
+    const containerProduits = document.querySelector('.cart-items');
 
-        // Mise à jour du compteur en haut
-        if (counter) counter.innerText = panier.length;
+    if (counter) counter.innerText = panier.length;
 
-        if (panier.length > 0) {
-            fullUI.style.display = 'block';
-            emptyMsg.style.display = 'none';
+    if (panier.length > 0) {
+        fullUI.style.display = 'block';
+        emptyMsg.style.display = 'none';
+        containerProduits.innerHTML = '';
 
-            // 2. On vide le container actuel pour le reconstruire proprement
-            containerProduits.innerHTML = '';
+        let totalGeneral = 0; // On initialise le calcul
 
-            // 3. On boucle sur chaque produit du tableau pour l'afficher
-            panier.forEach((produit, index) => {
-                containerProduits.innerHTML += `
-                    <div class="product-card" style="display: flex; gap: 20px; padding: 20px 0; border-bottom: 1px solid #eee;">
-                        <img src="produit1.jpg" alt="${produit.nom}" style="width: 110px; height: 140px; object-fit: cover;">
-                        <div class="product-info">
-                            <h3 style="margin: 0;">${produit.nom}</h3>
-                            <p style="margin: 5px 0; color: #888;">Taille : <span style="font-weight: bold;">${produit.taille}</span></p>
-                            <p style="margin: 10px 0; color: #666; font-weight: bold;">15 000 FCFA</p>
-                            <button onclick="supprimerArticle(${index})" style="background:none; border:none; color: #b22222; text-decoration: underline; cursor:pointer; padding:0;">Supprimer</button>
-                        </div>
+        panier.forEach((produit, index) => {
+            // On transforme le prix "15.000 FCFA" en nombre (15000) pour le calcul
+            const prixNumerique = 15000; 
+            totalGeneral += prixNumerique;
+
+            containerProduits.innerHTML += `
+                <div class="product-card">
+                    <img src="produit1.jpg" alt="${produit.nom}">
+                    <div class="product-info">
+                        <h3>${produit.nom}</h3>
+                        <p>Taille : ${produit.taille}</p>
+                        <p>${prixNumerique.toLocaleString()} FCFA</p>
+                        <button onclick="supprimerArticle(${index})">Supprimer</button>
                     </div>
-                `;
-            });
-            
-            // Mise à jour du prix total (Exemple simple)
-            const total = panier.length * 15000;
-            document.getElementById('total-prix').innerText = total.toLocaleString() + " FCFA";
-            document.getElementById('sous-total').innerText = total.toLocaleString() + " FCFA";
+                </div>
+            `;
+        });
 
-        } else {
-            fullUI.style.display = 'none';
-            emptyMsg.style.display = 'block';
+        // MISE À JOUR DES PRIX DANS LE RÉSUMÉ
+        // On cherche les éléments par leur ID ou leur place dans le résumé
+        const sousTotalElement = document.getElementById('sous-total') || document.querySelector('.cart-summary div span:last-child');
+        const totalElement = document.getElementById('total-prix') || document.querySelector('.cart-summary .total-amount') || document.querySelectorAll('.cart-summary div span')[3];
+
+        if (sousTotalElement) sousTotalElement.innerText = totalGeneral.toLocaleString() + " FCFA";
+        
+        // On met à jour le TOTAL (en bas du résumé)
+        // Note: Si tu n'as pas d'ID, on va cibler le dernier span du bloc résumé
+        const spans = document.querySelectorAll('.cart-summary span');
+        if (spans.length >= 4) {
+            spans[1].innerText = totalGeneral.toLocaleString() + " FCFA"; // Sous-total
+            spans[3].innerText = totalGeneral.toLocaleString() + " FCFA"; // Total
         }
+
+    } else {
+        fullUI.style.display = 'none';
+        emptyMsg.style.display = 'block';
     }
+}
 
     function supprimerArticle(index) {
         let panier = JSON.parse(localStorage.getItem('skai_panier')) || [];
