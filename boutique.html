@@ -10,15 +10,9 @@
 
 <header>
     <div class="header-left">
-        <div class="hamburger" id="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
+        <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
     </div>
-
     <div class="logo">SKAI</div>
-    
     <div class="header-right">
         <a href="panier.html" class="cart-icon">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -31,82 +25,54 @@
     </div>
 </header>
 
-    <nav class="nav-menu" id="nav-menu">
-        <ul>
-            <li><a href="index.html">Accueil</a></li>
-            <li><a href="boutique.html">Boutique</a></li>
-            <li><a href="propos.html">À Propos</a></li>
-            <li><a href="contact.html">Contact</a></li>
-        </ul>
-    </nav>
+<main class="shop-container">
+    <header class="shop-header" style="text-align: center; padding: 40px 0;">
+        <h2 style="letter-spacing: 5px; text-transform: uppercase;">La Collection</h2>
+        <p style="color: #888;">From Sénégal</p>
+    </header>
 
-    <main class="shop-container">
-        <header class="shop-header" style="text-align: center; padding: 40px 0;">
-            <h2 style="letter-spacing: 5px; text-transform: uppercase;">La Collection</h2>
-            <p style="color: #888;">From Sénégal</p>
-        </header>
-
-        <section class="product-grid">
-            <div class="product-card">
-                <div class="product-image">
-                    <img src="produit1.jpg" alt="Produit1 SKAI">
-                    <div class="quick-add" onclick="ajouterAuPanier()">Ajouter au panier</div>
-                </div>
-                <div class="product-info">
-                    <h3>T-Shirt Nazir "Roots"</h3>
-                    <p>15.000 FCFA</p>
-                </div>
+    <section class="product-grid">
+        <div class="product-card">
+            <div class="product-image">
+                <img src="produit1.jpg" alt="T-Shirt Nazir Roots">
+                <a href="produit-detail.html" class="quick-add" style="text-decoration: none; text-align: center;">Voir détails</a>
             </div>
-
-            <div class="product-card">
-                <div class="product-image">
-                    <img src="produit2.jpg" alt="Produit2 SKAI">
-                    <div class="quick-add" onclick="ajouterAuPanier()">Ajouter au panier</div>
-                </div>
-                <div class="product-info">
-                    <h3>Hoodie Signature</h3>
-                    <p>25.000 FCFA</p>
-                </div>
+            <div class="product-info">
+                <h3>T-Shirt Nazir "Roots"</h3>
+                <p>15.000 FCFA</p>
             </div>
-        </section>
-    </main>
+        </div>
 
-    <script>
-    // --- GESTION DU MENU ---
+        <div class="product-card">
+            <div class="product-image">
+                <img src="produit2.jpg" alt="Hoodie Signature">
+                <a href="produit-detail.html" class="quick-add" style="text-decoration: none; text-align: center;">Voir détails</a>
+            </div>
+            <div class="product-info">
+                <h3>Hoodie Signature</h3>
+                <p>25.000 FCFA</p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script>
     const hamburger = document.getElementById('hamburger');
     const navMenu = document.getElementById('nav-menu');
-    hamburger.addEventListener('click', () => {
-        navMenu.classList.toggle('active');
-        hamburger.classList.toggle('active');
-    });
-
-    // --- FONCTION AJOUT AU PANIER (SYNCHRONISÉE) ---
-    function ajouterAuPanier() {
-        // On dit à la mémoire que le panier n'est plus vide
-        localStorage.setItem('skai_panier_vide', 'false');
-        
-        // On met à jour le chiffre en haut immédiatement
-        updateCartCount();
-
-        // Animation visuelle sur le bouton (optionnel)
-        alert("Produit ajouté au panier !");
+    if(hamburger) {
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
     }
 
-    // --- MISE À JOUR DU COMPTEUR ---
     function updateCartCount() {
         const countElement = document.getElementById('cart-count');
         const estVide = localStorage.getItem('skai_panier_vide');
-
         if (countElement) {
-            if (estVide === 'false') {
-                countElement.innerText = "1";
-            } else {
-                countElement.innerText = "0";
-            }
+            countElement.innerText = (estVide === 'false') ? "1" : "0";
         }
     }
-
-    // Initialisation au chargement
     updateCartCount();
 </script>
 </body>

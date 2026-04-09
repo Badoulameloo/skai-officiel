@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails Produit | SKAI</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .detail-container { max-width: 1100px; margin: 40px auto; display: flex; gap: 40px; padding: 20px; flex-wrap: wrap; }
+        .detail-image { flex: 1.2; min-width: 320px; }
+        .detail-image img { width: 100%; border-radius: 2px; }
+        .detail-info { flex: 1; min-width: 320px; display: flex; flex-direction: column; gap: 20px; }
+        
+        .price { font-size: 1.8rem; color: #33241e; font-weight: bold; margin: 0; }
+        .size-label { font-weight: bold; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px; }
+        
+        #size-select { 
+            width: 100%; padding: 15px; border: 1px solid #ddd; appearance: none; 
+            background: url('data:image/svg+xml;charset=US-ASCII,<svg%20width%3D"14"%20height%3D"8"%20xmlns%3D"http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg"><path%20d%3D"m1%201%206%206%206-6"%20stroke%3D"%23000"%20fill%3D"none"%2F><%2Fsvg>') no-repeat right 15px center;
+            cursor: pointer; font-size: 1rem;
+        }
+        
+        #size-select.error { border-color: #b22222; background-color: #fff6f6; }
+
+        .btn-group { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+        
+        .btn-main { 
+            width: 100%; padding: 18px; text-transform: uppercase; font-weight: bold; 
+            letter-spacing: 1px; cursor: pointer; border: none; transition: 0.3s;
+        }
+        .btn-add { background: #33241e; color: white; }
+        .btn-buy { background: #000; color: white; }
+        .btn-main:hover { opacity: 0.8; }
+
+        .desc-title { border-bottom: 1px solid #eee; padding-bottom: 10px; font-weight: bold; font-size: 0.8rem; text-transform: uppercase; }
+        .desc-text { color: #666; line-height: 1.6; font-size: 0.95rem; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo" style="text-align: center; padding: 20px; font-size: 1.5rem; letter-spacing: 5px;">SKAI</div>
+</header>
+
+<main class="detail-container">
+    <div class="detail-image">
+        <img src="produit1.jpg" alt="Nazir Roots">
+    </div>
+
+    <div class="detail-info">
+        <div>
+            <p style="color: #888; font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 5px;">NAZIR BRAND</p>
+            <h1 style="margin: 0; letter-spacing: 3px; font-size: 1.5rem;">T-SHIRT "ROOTS"</h1>
+        </div>
+
+        <p class="price">15.000 FCFA</p>
+
+        <div class="selector-group">
+            <label class="size-label">Sélectionner la Taille *</label>
+            <select id="size-select">
+                <option value="" selected disabled>Choisir ma taille</option>
+                <option value="S">S — En stock</option>
+                <option value="M">M — En stock</option>
+                <option value="L">L — En stock</option>
+                <option value="XL" disabled>XL — Rupture de stock</option>
+            </select>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn-main btn-add" onclick="tenterAjout('panier')">Ajouter au panier</button>
+            <button class="btn-main btn-buy" onclick="tenterAjout('direct')">Acheter maintenant</button>
+        </div>
+
+        <div style="margin-top: 20px;">
+            <p class="desc-title">Description</p>
+            <p class="desc-text">T-shirt 100% coton premium, 240 GSM. Coupe oversize confortable avec sérigraphie haute définition. Une pièce maîtresse de la collection Nazir, pensée pour le style et la durabilité.</p>
+        </div>
+    </div>
+</main>
+
+<script>
+    function tenterAjout(mode) {
+        const select = document.getElementById('size-select');
+        const taille = select.value;
+
+        if (!taille) {
+            alert("S'il te plaît, choisis une taille avant de continuer !");
+            select.classList.add('error');
+            return;
+        }
+
+        // On enregistre les infos
+        localStorage.setItem('skai_panier_vide', 'false');
+        localStorage.setItem('skai_taille_choisie', taille);
+        
+        if (mode === 'direct') {
+            // "Acheter maintenant" envoie directement au paiement
+            window.location.href = "paiement.html";
+        } else {
+            // "Ajouter au panier" envoie à la page panier
+            alert("C'est bon ! Article ajouté en taille " + taille);
+            window.location.href = "panier.html";
+        }
+    }
+
+    // Retirer l'erreur quand l'utilisateur change de taille
+    document.getElementById('size-select').addEventListener('change', function() {
+        this.classList.remove('error');
+    });
+</script>
+
+</body>
+</html>
