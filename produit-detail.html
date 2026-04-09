@@ -82,31 +82,24 @@
     function tenterAjout(mode) {
         const select = document.getElementById('size-select');
         const taille = select.value;
+        const nomProduit = document.querySelector('h1').innerText; // Récupère "T-SHIRT ROOTS"
 
         if (!taille) {
-            alert("S'il te plaît, choisis une taille avant de continuer !");
+            alert("S'il te plaît, choisis une taille !");
             select.classList.add('error');
             return;
         }
 
-        // On enregistre les infos dans la mémoire
+        // ON ENREGISTRE TOUT
         localStorage.setItem('skai_panier_vide', 'false');
+        localStorage.setItem('skai_nom_produit', nomProduit);
         localStorage.setItem('skai_taille_choisie', taille);
         
         if (mode === 'direct') {
-            // "Acheter maintenant" : on fonce au paiement
             window.location.href = "paiement.html";
         } else {
-            // "Ajouter au panier" : on demande au client ce qu'il veut faire
-            const choix = confirm("Article ajouté en taille " + taille + " ! \n\nVoulez-vous voir votre panier ? \n(Cliquez sur 'Annuler' pour continuer vos achats)");
-            
-            if (choix) {
-                // L'utilisateur a cliqué sur OK
-                window.location.href = "panier.html";
-            } else {
-                // L'utilisateur a cliqué sur Annuler -> On reste sur la boutique
-                window.location.href = "boutique.html";
-            }
+            const choix = confirm("Ajouté ! Voir le panier ?");
+            window.location.href = choix ? "panier.html" : "boutique.html";
         }
     }
 

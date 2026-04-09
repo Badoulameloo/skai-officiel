@@ -12,6 +12,7 @@
             <div class="logo">SKAÏ</div>
         </nav>
     </header>
+    <input type="hidden" name="Details_Commande" id="hidden-details">
 
     <main>
         <section class="checkout-container">
@@ -80,5 +81,22 @@
     <footer>
         <p>&copy; 2026 SKAÏ - Design by Badoulameloo</p>
     </footer>
+    <script>
+    window.onload = function() {
+        // On récupère les infos sauvegardées
+        const produit = localStorage.getItem('skai_nom_produit') || "Produit SKAÏ";
+        const taille = localStorage.getItem('skai_taille_choisie') || "Non précisée";
+        const estVide = localStorage.getItem('skai_panier_vide');
+
+        const champCache = document.getElementById('hidden-details');
+
+        if (estVide === 'false') {
+            // On remplit le champ caché pour Formspree
+            champCache.value = produit + " - Taille : " + taille;
+        } else {
+            champCache.value = "Panier vide";
+        }
+    };
+</script>
 </body>
 </html>
