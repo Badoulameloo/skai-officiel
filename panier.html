@@ -91,32 +91,32 @@
 
     <script>
     function verifierPanier() {
-        const estVide = localStorage.getItem('skai_panier_vide');
-        const fullUI = document.getElementById('full-cart-ui');
-        const emptyMsg = document.getElementById('empty-cart-msg');
-        const counter = document.getElementById('nav-counter');
+    const estVide = localStorage.getItem('skai_panier_vide');
+    const fullUI = document.getElementById('full-cart-ui');
+    const emptyMsg = document.getElementById('empty-cart-msg');
+    const counter = document.getElementById('nav-counter');
 
-        if (estVide === 'true') {
-            // Force la disparition du panier plein
-            if(fullUI) fullUI.setAttribute("style", "display: none !important");
-            // Force l'apparition du message vide
-            if(emptyMsg) emptyMsg.setAttribute("style", "display: block !important");
-            if(counter) counter.innerText = '0';
-        } else {
-            // Force l'apparition du panier plein
-            if(fullUI) fullUI.setAttribute("style", "display: block !important");
-            // Force la disparition du message vide
-            if(emptyMsg) emptyMsg.setAttribute("style", "display: none !important");
-            if(counter) counter.innerText = '1';
-        }
+    if (estVide === 'true' || estVide === null) {
+        if(fullUI) fullUI.style.setProperty('display', 'none', 'important');
+        if(emptyMsg) emptyMsg.style.setProperty('display', 'block', 'important');
+        if(counter) counter.innerText = "0";
+    } else {
+        if(fullUI) fullUI.style.setProperty('display', 'block', 'important');
+        if(emptyMsg) emptyMsg.style.setProperty('display', 'none', 'important');
+        if(counter) counter.innerText = "1";
     }
-
+}
     function supprimerDuPanier() {
-        // 1. On enregistre l'info
-        localStorage.setItem('skai_panier_vide', 'true');
-        // 2. On déclenche la mise à jour visuelle
-        verifierPanier();
-    }
+    // 1. On change la valeur en 'true' (donc vide)
+    localStorage.setItem('skai_panier_vide', 'true');
+    
+    // 2. On supprime les détails du produit pour éviter qu'ils ne reviennent
+    localStorage.removeItem('skai_nom_produit');
+    localStorage.removeItem('skai_taille_choisie');
+
+    // 3. On rafraîchit l'affichage
+    verifierPanier(); 
+}
 
     // On lance la vérification au chargement
     window.onload = verifierPanier;

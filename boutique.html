@@ -89,6 +89,23 @@
     // Force la mise à jour même si on revient en arrière avec le bouton "Précédent"
     window.addEventListener('pageshow', function(event) {
         updateCartCount();
+        function syncCart() {
+        const countElement = document.getElementById('cart-count') || document.getElementById('nav-counter');
+        const estVide = localStorage.getItem('skai_panier_vide');
+
+        if (countElement) {
+            if (estVide === 'false') {
+                countElement.innerText = "1";
+            } else {
+                countElement.innerText = "0";
+            }
+        }
+    }
+
+    // Se lance au chargement
+    window.onload = syncCart;
+    // Se lance quand on revient en arrière
+    window.onpageshow = syncCart;
     });
 </script>
 </script>
